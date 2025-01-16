@@ -54,6 +54,7 @@ In just **six lines of code**, you’ll generate stunning, publication-ready vis
 - **DEMO5_CK_WP**: The old, but nice and always useful AUTO's WritePoints function!
 - **DEMO6_FHN_NC**: Do you need nullclines? In this demo, you can learn the tools to load and visualize them!
 - **DEMO7_FHN_SM**: Learn how to visualize slow manifold reconstruction calculations computed with XPPAUT.
+- **DEMO8_HH_EIG**: See what you already know regarding the eigenvalues along a 1P-BD.
 
 ### What You’ll Learn:
 - Effortlessly import XPPLORE (temporary solution)

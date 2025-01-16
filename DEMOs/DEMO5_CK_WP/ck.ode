@@ -1,0 +1,81 @@
+##### INITIAL CONDITIONs
+
+v(0) = -65 
+n(0) = 0
+
+
+
+##### PARAMETERs
+
+par c     = -0.5
+par cm    = 5300
+par vk    = -75
+par vca   = 25
+par gk    = 2700
+par gca   = 1000
+par gkatp = 150
+par gkca  = 2000
+par kd    = 5
+par phi   = 0.035
+par vm    = -20
+par sm    = 24
+par vn    = -16
+par sn    = 11.2
+par kpmca = 0.18
+par f     = 0.001
+par alpha = 4.50e-6
+
+
+
+##### FUNCTIONs
+
+minf  = 0.5*(1+tanh((v-vm)/sm))
+ninf  = 0.5*(1+tanh((v-vn)/sn))
+taun  = 1/cosh((V-vn)/(2*sn))/phi
+Ikca  = gkca/(1+(kd/c)^1)*(v-vk)
+Ica   = gca*minf*(v-vca)
+Ik    = gk*n*(v-vk)
+Ikatp = gkatp*(v-vk)
+Jmem  = -(alpha*Ica + kpmca*c)
+
+
+
+##### ODEs
+dv/dt = -(Ik + Ica + Ikca + Ikatp)/cm
+dn/dt =  (ninf-n)/taun
+
+
+
+##### AUXILIARY
+aux J       = Jmem
+aux tsec    = t/1000
+aux Condkca = gkca/(1+(kd/c)^1)
+aux Ica     = Ica
+
+
+
+##### SETTINGs
+@ METH=cvode
+@ ATOL=1e-6
+@ TOL=1e-6
+@ DT=0.01
+@ TOTAL=30000
+@ MAXSTOR=100000
+@ XP=n
+@ YP=v
+@ BOUND=100000000
+@ XLO=-0.05
+@ XHI=0.1
+@ YLO=-70
+@ YHI=-10
+@ NEWT_ITER=1000
+@ NEWT_TOL=1e-6
+@ JAC_EPS=1e-5
+@ NTST=50
+@ DS=1e-3
+@ DSMIN=1e-6
+@ DSMAX=1e-1
+@ PARMIN=-0.5
+@ PARMAX=2.5
+done
+

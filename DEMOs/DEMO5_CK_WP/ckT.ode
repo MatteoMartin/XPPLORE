@@ -1,0 +1,60 @@
+#### INITIAL CONDITIONs
+
+v(0)=-65 
+n(0)=0 
+c(0)=0.1 
+
+
+#### PARAMETERs
+
+par gkatp=150
+par vk=-75
+par vca=25
+par cm=5300
+par gk=2700
+par gca=1000
+par vm=-20
+par sm=24
+par vn=-16
+par sn=11.2
+par gkca=2000
+par kd=5
+par phi=0.035
+par kpmca=0.18
+par f=0.001
+par alpha=4.50e-6
+
+
+#### FUNCTIONs
+
+minf=0.5*(1+tanh((v-vm)/sm))
+ninf=0.5*(1+tanh((v-vn)/sn))
+taun=1/cosh((V-vn)/(2*sn))/phi
+Ikca=gkca/(1+(kd/c)^1)*(v-vk)
+Ica = gca*minf*(v-vca)
+Ik  = gk*n*(v-vk)
+Ikatp = gkatp*(v-vk)
+Jmem = -(alpha*Ica + kpmca*c)
+
+
+#### ODEs
+
+dv/dt=-(Ik + Ica + Ikca + Ikatp)/cm
+dn/dt=(ninf-n)/taun
+dc/dt = f*Jmem
+
+
+#### AUXILIARY VARIABLEs
+
+aux tsec=t/1000
+aux Condkca=gkca/(1+(kd/c)^1)
+aux Ica=Ica
+aux J=Jmem
+
+
+#### SETTINGs
+
+@ meth=cvode, atol=1.0e-6, tol=1.0e-6, dt=1, total=30000, maxstor=100000
+@ xp=tsec, yp=v, bound=100000000
+@ xlo=0, xhi=30, ylo=-70, yhi=-10
+done

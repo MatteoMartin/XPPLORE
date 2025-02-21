@@ -10,28 +10,35 @@
 %
 % Last Update - 02/21/2025
 
-%% SECTION 3.1 - PREPARATION
+%% from SECTION 3.1 - PREPARATION
 
-% CLEAR ENVIROMENT
+% Clear Environment.
 clear all; close all; clc;
 
-% IMPORT PACKAGE - Change to YOUR XPPLORE path
-addpath(genpath('../../Function_Visualization'))
-addpath(genpath('../../Function_XPPAUT'))
+% Import Package. Change to YOUR XPPLORE PATH!
+addpath(genpath('../../XPPLORE'))
 
-%% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
 M = Func_ReadModel('ck.ode');
 
-%% SECTION 3.3 - BIFURCATION DIAGRAM
+%% from SECTION 3.3 - BIFURCATION DIAGRAM
 
 % AUTORePO - Read the content of an .auto file.
 AR = Func_ReadAutoRepo(M,'ck.auto');
 
-%%
+%% SECTION 3.4 - AVERAGING
 
-% VISUALIZATION
+% TRAJECTORIEs - Extract the periodic orbits.
+TRJ = Func_GetTRJ(M,AR.BD1_c);
+
+%%
+% AVERAGING - Applying averaging.
+[c,J,BZ] = Func_Averaging(M,TRJ,0.32);
+
+%%
+% VISUALIZATION - Visualization of 1P-BD with averaging results.
 fig = figure();
 
 Func_VisualizeDiagram(M,AR.BD1_c)
@@ -40,16 +47,9 @@ Func_VisualizeLabPoints(M,AR.BD1_c)
 xlim([-0.5   1]), xlabel('$c$ [mM]','interpreter','latex')
 ylim([-80  -10]), ylabel('$V$ [mV]','interpreter','latex')
 
-Func_SaveFigure(fig)
+Func_FigStyle(fig);
 
-%% SECTION 3.4 - AVERAGING
-
-% TRAJECTORIEs - Extract the periodic orbits.
-TRJ = Func_GetTRJ(M,AR.BD1_c);
-
-% AVERAGING - Applying averaging.
-[c,J,BZ] = Func_Averaging(M,TRJ,0.32);
-
+%%
 % WRITE POINTs - Convert and export the .auto in a .dat file
 Func_WritePoints(M,AR.BD1_c,'BD.dat')
 

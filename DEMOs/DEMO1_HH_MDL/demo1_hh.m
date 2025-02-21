@@ -12,12 +12,11 @@
 
 %% SECTION 3.1 - PREPARATION
 
-% CLEAR ENVIROMENT
+% Clear Environment.
 clear all; close all; clc;
 
-% IMPORT PACKAGE - Change to YOUR XPPLORE path
-addpath(genpath('../../../Function_Visualization'))
-addpath(genpath('../../../Function_XPPAUT'))
+% Import Package. Change to YOUR XPPLORE PATH!
+addpath(genpath('../../XPPLORE'))
 
 %% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
@@ -35,7 +34,7 @@ NC % Display content
 
 %%
 
-% SIMULATION - Visualization
+% SIMULATION - Visualize a simulation.
 fig = figure();
 plot(D.t,D.v,'Color','b','LineWidth',1.2)
 
@@ -46,7 +45,7 @@ Func_FigStyle(fig)
 
 %%
 
-% SIMULATION & NULLCLINEs - Visualization
+% SIMULATION & NULLCLINEs - Visualize the nullclines.
 fig = figure();
 Func_VisualizeNullclines(NC)
 

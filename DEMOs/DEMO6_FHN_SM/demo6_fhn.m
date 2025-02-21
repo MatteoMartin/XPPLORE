@@ -10,34 +10,33 @@
 %
 % Last Update - 02/21/2025
 
-%% SECTION 3.1 - PREPARATION
+%% from SECTION 3.1 - PREPARATION
 
-% CLEAR ENVIROMENT
+% Clear Environment.
 clear all; close all; clc;
 
-% IMPORT PACKAGE - Change to YOUR XPPLORE path
-addpath(genpath('../../Function_Visualization'))
-addpath(genpath('../../Function_XPPAUT'))
+% Import Package. Change to YOUR XPPLORE PATH!
+addpath(genpath('../../XPPLORE'))
 
-%% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
-M1 = Func_ReadModel('FHN_Sr.ode');
+M = Func_ReadModel('FHN_Sr.ode');
 
-%% SECTION 3.3 - BIFURCATION DIAGRAM
+%% from SECTION 3.3 - BIFURCATION DIAGRAM
 
 % AUTORePO - Read the content of an .auto file.
-AR_Sr = Func_ReadAutoRepo(M1,'FHN_Sr.auto');
+AR = Func_ReadAutoRepo(M,'FHN_Sr.auto');
 
-%% SECTION 3.5 - SLOW MANIFOLDs
+%% from SECTION 3.4 - AVERAGING
 
 % TRAJECTORIEs - Extract the periodic orbits.
 TRJ = Func_GetTRJ(M1,AR_Sr.BD1_sI);
 
-% SLOW MANIFOLD - Reconstruct the slow manifold
-Sr  = Func_SlowManifold(TRJ,{'v','h','s'});
+%% SECTION 3.5 - SLOW MANIFOLD
 
-% SLOW MANIFOLD - Reconstruct the slow manifold
+% SLOW MANIFOLD - Reconstruct the slow manifold.
+Sr  = Func_SlowManifold(TRJ,{'v','h','s'});
 SrP = Func_SlowManifoldProjection(TRJ,{'v','h','s'});
 
 %%
@@ -56,7 +55,7 @@ Func_FigStyle(fig)
 % OPTIONs
 opts = Func_DOF('ClippingStyle','3dbox');
 
-% VISUALIZATION - (3D Surface)
+% VISUALIZATION - (3D Surface) Visualize the slow manifold.
 fig = figure();
 
 hold on
@@ -71,7 +70,7 @@ Func_FigStyle(fig,'OPTIONs',opts)
 
 %%
 
-% VISUALIZATION - (Projection)
+% VISUALIZATION - (Projection) Visualize the slow manifold.
 fig = figure();
 
 hold on

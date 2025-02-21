@@ -11,14 +11,13 @@
 %
 % Last Update - 02/21/2025
 
-%% SECTION 3.1 - PREPARATION
+%% from SECTION 3.1 - PREPARATION
 
-% CLEAR ENVIROMENT
+% Clear Environment.
 clear all; close all; clc;
 
-% IMPORT PACKAGE - Change to YOUR XPPLORE path
-addpath(genpath('../../../Function_Visualization'))
-addpath(genpath('../../../Function_XPPAUT'))
+% Import Package. Change to YOUR XPPLORE PATH!
+addpath(genpath('../../XPPLORE'))
 
 %% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
@@ -52,25 +51,24 @@ Func_VisualizeDiagram(M,AR.BD1_i0,'VAR',{'i0','m'})
 Func_VisualizeLabPoints(M,AR.BD1_i0,'VAR',{'i0','m'})
 
 xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0  200])
-ylabel('$m$ [\]','interpreter','latex')             , ylim([0 1])
+ylabel('$m$ [\ ]','interpreter','latex')             , ylim([0 1])
 
 Func_FigStyle(fig)
 
 %%
-%
-%
-% Visualize eigenvalues with 1P-BD.
 
-opts = Func_DOF('ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
+% EIGENVALUEs - Visualize eigenvalues with 1P-BD.
+
+opts = Func_DOF('ClippingStyle','3dbox');
 
 fig = figure();
 
-Func_VisualizeEig(M,AR.BD1_i0)
+% Func_VisualizeEig(M,AR.BD1_i0)
 % Alternatively, try these:
 % Func_VisualizeEig(M,AR.BD1_i0,'BRIND',{1,2,3,4})
-% Func_VisualizeEig(M,AR.BD1_i0,'TYPE','Im')
+Func_VisualizeEig(M,AR.BD1_i0,'TYPE','Im')
 
-xlabel('$i_0$ [\ ]','interpreter','latex')
+xlabel('$I_0$ [\ ]','interpreter','latex')
 ylabel('$\Re(\lambda)$','interpreter','latex')
 % ylabel('$\Im(\lambda)$','interpreter','latex')
 zlabel('$V$ [\ ]','interpreter','latex')
@@ -78,12 +76,10 @@ zlabel('$V$ [\ ]','interpreter','latex')
 % Optional: Apply figure style with options specified above
 Func_FigStyle(fig,'OPTIONs',opts)
 
-% Export figure with options specified above
-% Func_FigExport(fig,'demo2_DSWEB_EIG3D')
 
-%
-%
-% Retrieving eigenvalues for further use.
+%%
+
+% GET EIGENVALUEs - Retrieving eigenvalues for further use.
 
 [EIGBR, EIGLAB] = Func_GetEig(AR.BD1_i0);
 
@@ -144,3 +140,20 @@ ylim([0   1])
 
 Func_FigStyle(fig,'OPTIONs',opts)
 % Func_FigExport(fig,'demo2_DSWEB_1PBD')
+
+
+%% Figure 4
+
+
+opts = Func_DOF('ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
+
+fig = figure();
+
+Func_VisualizeEig(M,AR.BD1_i0)
+
+xlabel('$i_0$ [\ ]','interpreter','latex')
+ylabel('$\Re(\lambda)$','interpreter','latex')
+zlabel('$V$ [\ ]','interpreter','latex')
+
+Func_FigStyle(fig,'OPTIONs',opts)
+% Func_FigExport(fig,'demo2_DSWEB_EIG3D')

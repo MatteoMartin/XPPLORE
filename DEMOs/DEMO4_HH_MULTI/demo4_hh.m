@@ -11,16 +11,15 @@
 %
 % Last Update - 02/21/2025
 
-%% SECTION 3.1 - PREPARATION
+%% from SECTION 3.1 - PREPARATION
 
-% CLEAR ENVIROMENT
+% Clear Environment.
 clear all; close all; clc;
 
-% IMPORT PACKAGE - Change to YOUR XPPLORE path
-addpath(genpath('../../Function_Visualization'))
-addpath(genpath('../../Function_XPPAUT'))
+% Import Package. Change to YOUR XPPLORE PATH!
+addpath(genpath('../../XPPLORE'))
 
-%% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
 M = Func_ReadModel('hh.ode');
@@ -32,7 +31,8 @@ AR = Func_ReadAutoRepo(M,'hh.auto');
 
 %%
 
-% VISUALIZATION
+% VISUALIZATION - Visualize a 1P- and a 2P-BD in the same 3D plot.
+%                 Visualize multiple 1P-BDs and a 2P-BD in the same 3D plot.
 fig = figure();
 
 Func_VisualizeDiagram(M,AR.BD2_i0_gk ,'VAR',{'i0','gk','v'})

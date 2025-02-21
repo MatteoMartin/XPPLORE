@@ -11,7 +11,7 @@ function Func_VisualizeEig(M,BD,varargin)
 %   @param BD    :   Bifurcation Diagram structure
 %   
 %   @optional VAR     :   Axes' variables
-%   @optional BRDIND   :   Index/Indices of branches to be visualized.
+%   @optional BRIND   :   Index/Indices of branches to be visualized.
 %   @optional TYPE    :   Real or Imaginary parts of Eig?
 %   @optional OPTIONs :   Options structure
 %
@@ -22,7 +22,7 @@ function Func_VisualizeEig(M,BD,varargin)
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 01/15/2024
+% Last Update - 02/14/2025
 
 
 
@@ -139,14 +139,14 @@ for i=1:1:length(BRIND)
             Func_VisualizeBranch(XL,ZL,YL,C,'-',LW,M,MS,'b')
         end
 
-        Func_VisualizeLabPoints(EIGLAB,BRIND{i});
+        Func_VisualizeLabPoints(EIGLAB,BRIND{i},PTs,VAR,V,P,opts,eigcol,DIM);
 
-        limits(1) = min(round(min(XL))-1,limits(1));
-        limits(2) = max(round(max(XU))+1,limits(2));
-        limits(3) = min(round(min(ZL))-1,limits(3));
-        limits(4) = max(round(max(ZU))+1,limits(4));
-        limits(5) = min(round(min(YL))-1,limits(5));
-        limits(6) = max(round(max(YU))+1,limits(6));
+        limits(1) = min(round(min(XL))*1.2,limits(1));
+        limits(2) = max(round(max(XU))*1.2,limits(2));
+        limits(3) = min(round(min(ZL))*1.2,limits(3));
+        limits(4) = max(round(max(ZU))*1.2,limits(4));
+        limits(5) = min(round(min(YL))*1.2,limits(5));
+        limits(6) = max(round(max(YU))*1.2,limits(6));
     end
 end  
 
@@ -185,27 +185,28 @@ view(3); view([10 15]);
         end
     end
 
-    function Func_VisualizeLabPoints(EIGLAB,BRi)
+    function Func_VisualizeLabPoints(EIGLAB,BRi,PTs,VAR,V,P,opts,eigcol,DIM)
+        FPTs = fieldnames(PTs);
         for k=1:size(EIGLAB,1)
             if EIGLAB(k,1,1)==BRi
 
-                PTi = FPT{k};
+                PTi = FPTs{k};
 
                 I = find(opts.Bif.Types == PTs.(PTi).TYP,1);
                 if isempty(I), continue, end
         
                 if Func_IsVisualizableBranch(PTs.(PTi),VAR,V,P)
-                    [XU,XL] = Func_GetAxis(PTs.(PTi),VAR{1},V,P);
-                    [YU,YL] = Func_GetAxis(PTs.(PTi),VAR{2},V,P);
+                    [XUp,XLo] = Func_GetAxis(PTs.(PTi),VAR{1},V,P);
+                    [YUp,YLo] = Func_GetAxis(PTs.(PTi),VAR{2},V,P);
 
                     % Visualize Labeled Points in Eig=0 plane
-                    Func_VisualizeBranch(XL,zeros(size(XL)),YL,opts.Bif.(opts.Bif.Names{I}).Color,...
+                    Func_VisualizeBranch(XLo,zeros(size(XLo)),YLo,opts.Bif.(opts.Bif.Names{I}).Color,...
                                              'none',...
                                              1,...
                                              opts.Bif.(opts.Bif.Names{I}).Marker,...
                                              opts.Bif.(opts.Bif.Names{I}).MarkerSize,...
                                              opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
-                    Func_VisualizeBranch(XU,zeros(size(XU)),YU,opts.Bif.(opts.Bif.Names{I}).Color,...
+                    Func_VisualizeBranch(XUp,zeros(size(XUp)),YUp,opts.Bif.(opts.Bif.Names{I}).Color,...
                                              'none',...
                                              1,...
                                              opts.Bif.(opts.Bif.Names{I}).Marker,...
@@ -213,12 +214,12 @@ view(3); view([10 15]);
                                              opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
 
                     % Visualize Labeled Points along Eig-BD branches
-                    Func_VisualizeBranch(XL,EIGLAB(k,2:DIM,eigcol),YL, ...
+                    Func_VisualizeBranch(XLo,EIGLAB(k,2:DIM,eigcol),YLo, ...
                         opts.Bif.(opts.Bif.Names{I}).Color,'none',1, ...
                         opts.Bif.(opts.Bif.Names{I}).Marker,...
                         opts.Bif.(opts.Bif.Names{I}).MarkerSize,...
                         opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
-                    Func_VisualizeBranch(XU,EIGLAB(k,2:DIM,eigcol),YU, ...
+                    Func_VisualizeBranch(XUp,EIGLAB(k,2:DIM,eigcol),YUp, ...
                         opts.Bif.(opts.Bif.Names{I}).Color,'none',1, ...
                         opts.Bif.(opts.Bif.Names{I}).Marker, ...
                         opts.Bif.(opts.Bif.Names{I}).MarkerSize, ...

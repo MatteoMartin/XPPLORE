@@ -46,6 +46,7 @@ opts = parser.Results.OPTIONs;
 % EXPORT
 
 fig.PaperPositionMode = 'auto';
+fig.PaperSize         = [fig.Position(3) fig.Position(4)];
 if not(isempty(fileName))
     print([fileName,opts.extension], opts.format, opts.resolution)
 end

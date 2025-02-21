@@ -1,0 +1,98 @@
+% 
+% Chapter 3.3 Bifurcation Diagram
+%         - 3.3.3 Multi BDs
+% 
+%
+% PhD Students Martin Matteo (*') & Thomas Anna Kishida (+')
+%
+% (*) University of Padova
+% (+) University of Pittsburgh
+% (') Both authors contributed equally to the work.
+%
+% Last Update - 02/21/2025
+
+%% SECTION 3.1 - PREPARATION
+
+% CLEAR ENVIROMENT
+clear all; close all; clc;
+
+% IMPORT PACKAGE - Change to YOUR XPPLORE path
+addpath(genpath('../../Function_Visualization'))
+addpath(genpath('../../Function_XPPAUT'))
+
+%% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+
+% MODEL - Read the content of an .ode file.
+M = Func_ReadModel('hh.ode');
+
+%% SECTION 3.3 - BIFURCATION DIAGRAM
+
+% AUTORePO - Read the content of an .auto file.
+AR = Func_ReadAutoRepo(M,'hh.auto');
+
+%%
+
+% VISUALIZATION
+fig = figure();
+
+Func_VisualizeDiagram(M,AR.BD2_i0_gk ,'VAR',{'i0','gk','v'})
+Func_VisualizeDiagram(M,AR.BD1_i0    ,'VAR',{'i0','gk','v'})
+Func_VisualizeDiagram(M,AR.BD3_i0    ,'VAR',{'i0','gk','v'})
+Func_VisualizeLabPoints(M,AR.BD1_i0  ,'VAR',{'i0','gk','v'})
+Func_VisualizeLabPoints(M,AR.BD3_i0  ,'VAR',{'i0','gk','v'})
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 180])
+ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex'), ylim([0  60])
+zlabel('$V$ [mV]','interpreter','latex'),   zlim([-80 40])
+
+view(45,10)
+
+Func_FigStyle(fig)
+
+%% FIGURE 6
+
+% BOUNDARIEs
+B.i0 = [0  180];
+B.gK = [0   60];
+B.V  = [-80 40];
+
+% OPTIONs
+opts = Func_DOF('width',12);
+
+% VISUALIZATION
+fig = figure();
+
+tiledlayout(1,2,'TileSpacing','compact','Padding','compact')
+
+% (A)
+nexttile()
+
+Func_VisualizeDiagram(M,AR.BD2_i0_gk ,'VAR',{'i0','gk','v'})
+Func_VisualizeDiagram(M,AR.BD1_i0    ,'VAR',{'i0','gk','v'})
+Func_VisualizeLabPoints(M,AR.BD1_i0  ,'VAR',{'i0','gk','v'})
+
+text(B.i0(1)-(B.i0(2)-B.i0(1))*0.28,B.gK(1)-(B.gK(2)-B.gK(1))*0.28,B.V(2),'(A)','interpreter','latex')
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim(B.i0)
+ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')    , ylim(B.gK)
+zlabel('$V$ [mV]','interpreter','latex')             , zlim(B.V )
+
+view(45,10)
+
+% (B)
+nexttile()
+
+Func_VisualizeDiagram(M,AR.BD2_i0_gk ,'VAR',{'i0','gk','v'})
+Func_VisualizeDiagram(M,AR.BD1_i0    ,'VAR',{'i0','gk','v'})
+Func_VisualizeLabPoints(M,AR.BD1_i0  ,'VAR',{'i0','gk','v'})
+
+text(B.i0(2)+(B.i0(2)-B.i0(1))*0.28,B.gK(1)-(B.gK(2)-B.gK(1))*0.28,B.V(2),'(B)','interpreter','latex')
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim(B.i0)
+ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')    , ylim(B.gK)
+zlabel('$V$ [mV]','interpreter','latex')             , zlim(B.V )
+
+view(135,10)
+
+Func_FigStyle(fig,'OPTIONs',opts)
+%Func_FigExport(fig,'demo4_DSWEB_MULTI')

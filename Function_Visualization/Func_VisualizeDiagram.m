@@ -1,6 +1,6 @@
 function Func_VisualizeDiagram(M,BD,varargin)
 %
-%   Func_VisualizeDiagram(M,BD,[VAR,OPTIONs])
+%   Func_VisualizeDiagram(M,BD,[VAR],[BRIND],[OPTIONs])
 %
 %   Function to visualize the bifurcation diagram in BD.
 %   The variables on the x/y/z axes are in VAR.
@@ -10,6 +10,7 @@ function Func_VisualizeDiagram(M,BD,varargin)
 %   @param BD   :   Bifurcation Diagram structure
 %
 %   @optional VAR     :   Axes' variables
+%   @optional BRIND   :   Index/Indices of branches to be visualized
 %   @optional OPTIONs :   Options structure
 %
 %
@@ -19,12 +20,13 @@ function Func_VisualizeDiagram(M,BD,varargin)
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 12/13/2024
+% Last Update - 2/13/2025
 
 
 % DEFAULT VALUEs
 
 defaultOptions = Func_DOBD();
+defaultBRIND = arrayfun(@(x) x, 1:BD.BR.nBR, 'UniformOutput', false);
 
 % DEFAULT VALUEs - VARIABLEs
 iFs = 1;
@@ -40,12 +42,14 @@ parser = inputParser;
 addRequired(parser ,'M'  ,@isstruct)
 addRequired(parser ,'BD' ,@isstruct)
 addParameter(parser,'VAR'    ,defaultVAR     ,@iscell)
+addParameter(parser,'BRIND'  ,defaultBRIND   ,@iscell)
 addParameter(parser,'OPTIONs',defaultOptions ,@isstruct)
 parse(parser,M,BD,varargin{:});
 
 % UNPACKING INPUT
 
 VAR  = parser.Results.VAR;
+BRIND = parser.Results.BRIND;
 opts = parser.Results.OPTIONs;
 
 % INPUT
@@ -56,7 +60,11 @@ V  = Func_DynVAR(M.V);
 nV = length(VAR);
 
 FBR = fieldnames(BD);
-for iBR = 1:1:BD.nBR
+
+% for iBR = 1:1:BD.nBR
+for i = 1:length(BRIND)
+
+    iBR = BRIND{i};
     
     BR = FBR{iBR};
     T  = BD.(BR).TYP ;

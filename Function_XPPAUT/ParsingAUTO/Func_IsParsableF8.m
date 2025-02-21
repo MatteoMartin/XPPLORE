@@ -21,11 +21,18 @@ function isP = Func_IsParsableF8(H,V)
 %
 % Last Update - 10/11/2024
 
+nRP  = 6;
 nV   = length(V);
 pITP = [4,5,6,7,8,9,59,69,79,89];
 
 isP = false;
 if isstruct(H) && any(pITP == abs(H.ITP))
+
+    if H.NROW == (ceil((nV+1)/7) + nRP)
+        isP = false;
+        return
+    end
+
     if H.ITP == -4 && H.NTPL == 1
         isP = false;
         return

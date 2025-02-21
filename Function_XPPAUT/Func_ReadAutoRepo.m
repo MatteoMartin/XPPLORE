@@ -407,13 +407,16 @@ end
         B = sprintf('PT%i_%s',F7.SET.LAB,NAMEs{TYPEs == F7.SET.BIF});
         
         if all(not(TYPEs == F7.SET.BIF))
-            N = num2str(F7.SET.BIF); 
-            N = str2double(N(1));
+            N  = F7.SET.BIF; 
+            N1 = floor(abs(N)/10);
+            N2 = mod(abs(N),10);
 
-            if F7.SET.BIF < 0, TYPE = 'MX'; 
-            else,              TYPE = 'EP';
+            if     F7.SET.BIF < 0 && N2 == 9, TYPE = 'MX'; 
+            elseif F7.SET.BIF < 0 && N2 == 4, TYPE = 'UZ';
+            elseif F7.SET.BIF > 0 && N2 == 9, TYPE = 'EP';
+            elseif F7.SET.BIF > 0 && N2 == 4, TYPE = 'RG';
             end
-            B = sprintf('PT%i_%s%s',F7.SET.LAB,TYPE,NAMEs{TYPEs == N});
+            B = sprintf('PT%i_%s%s',F7.SET.LAB,TYPE,NAMEs{TYPEs == N1});
         end
     end
 

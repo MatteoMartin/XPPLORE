@@ -1,6 +1,6 @@
 function Func_VisualizeLabPoints(M,BD,varargin)
 %
-%   Func_VisualizeLabPoints(M,LABPTs,[VAR],[OPTIONs])
+%   Func_VisualizeLabPoints(M,LABPTs,[VAR,BRIND,PTIND,OPTIONs])
 %
 %   Function to visualize the labelled points in LABPTs.
 %   The variables on the x/y/z axes are in VAR.
@@ -10,6 +10,8 @@ function Func_VisualizeLabPoints(M,BD,varargin)
 %   @param LABPTs :   Labelled points.
 %
 %   @optional VAR     :   Axes' variables
+%   @optional BRIND   :   Index/Indices of branches to be visualized
+%   @optional PTIND   :   Index/Indices of points to be visualized
 %   @optional OPTIONs :   Options structure
 %
 %
@@ -19,12 +21,16 @@ function Func_VisualizeLabPoints(M,BD,varargin)
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 01/07/2025
+% Last Update - 02/13/2025
 
 
 % DEFAULT VALUEs
 
 defaultOptions = Func_DOBD();
+defaultBRIND = {};
+defaultPTIND = {};
+% defaultBRIND = arrayfun(@(x) x, 1:BD.BR.nBR, 'UniformOutput', false);
+% defaultPTIND = arrayfun(@(x) x, BD.LABPTs.:BD.LABPTs.nPT, 'UniformOutput', false);
 
 % DEFAULT VALUEs - VARIABLEs
 iFs = 1;
@@ -40,12 +46,16 @@ parser = inputParser;
 addRequired(parser ,'M'  ,@isstruct)
 addRequired(parser ,'BD' ,@isstruct)
 addParameter(parser,'VAR'    ,defaultVAR     ,@iscell)
+addParameter(parser,'BRIND'  ,defaultBRIND   ,@iscell)
+addParameter(parser,'PTIND'  ,defaultPTIND   ,@iscell)
 addParameter(parser,'OPTIONs',defaultOptions ,@isstruct)
 parse(parser,M,BD,varargin{:});
 
 % UNPACKING INPUT
 
 VAR  = parser.Results.VAR;
+BRIND = parser.Results.BRIND;
+PTIND = parser.Results.PTIND;
 opts = parser.Results.OPTIONs;
 
 PTs = BD.LABPTs;
@@ -53,14 +63,18 @@ P   = M.P;
 V   = Func_DynVAR(M.V);
 nV  = length(VAR);
 
-FPT = fieldnames(PTs);
-for iB = 1:1:PTs.nPT
-    PTi = FPT{iB};
+VIZPTs = Func_GetVisualizablePoints(PTs,BRIND,PTIND);
 
-    I = find(opts.Bif.Types == PTs.(PTi).TYP,1);
+for iB = 1:1:length(VIZPTs)
+    PTi = VIZPTs{iB};
+
+    TYP = abs(PTs.(PTi).TYP);
+    if abs(TYP) > 10, TYP = floor(abs(PTs.(PTi).TYP)/10); end
+
+    I = find(opts.Bif.Types == TYP,1);
     if isempty(I), continue, end
 
-    if Func_IsVisualizableBranch(PTs.(PTi),VAR,V,P)
+    if Func_IsVisualizablePoint(PTs.(PTi),VAR,V,P)
         [XU,XL] = Func_GetAxis(PTs.(PTi),VAR{1},V,P);
         [YU,YL] = Func_GetAxis(PTs.(PTi),VAR{2},V,P);
         if length(VAR) == 3, [ZU,ZL] = Func_GetAxis(PTs.(PTi),VAR{3},V,P);
@@ -99,7 +113,27 @@ for iB = 1:1:PTs.nPT
 end
 
     % FUNCTIONs
-    function isV = Func_IsVisualizableBranch(B,VAR,V,P)
+
+    function VIZPTs = Func_GetVisualizablePoints(PTs,BRIND,PTIND)
+        nPT = PTs.nPT;
+        VIZPTs = {};
+        j=1;
+        FPT = fieldnames(PTs);
+        for i=1:nPT
+            if isempty(BRIND) && isempty(PTIND)
+                VIZPTs{j} = FPT{i};
+                j = j + 1;
+            end
+
+            if any(cellfun(@(x) isequal(x,PTs.(FPT{i}).BR),BRIND)) || ...
+                    any(cellfun(@(x) isequal(x,PTs.(FPT{i}).LAB),PTIND))
+                VIZPTs{j} = FPT{i};
+                j = j + 1;
+            end
+        end
+    end
+
+    function isV = Func_IsVisualizablePoint(B,VAR,V,P)
         isV  = true;
         F    = fieldnames(B);
         nVAR = length(VAR);

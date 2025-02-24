@@ -16,7 +16,7 @@
 clear all; close all; clc;
 
 % Import Package. Change to YOUR XPPLORE PATH!
-addpath(genpath('../../XPPLORE'))
+addpath(genpath('../../../XPPLORE'))
 
 %% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 

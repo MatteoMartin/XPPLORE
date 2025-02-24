@@ -57,25 +57,54 @@ Func_FigStyle(fig)
 
 %%
 
-% EIGENVALUEs - Visualize eigenvalues with 1P-BD.
+% EIGENVALUEs - Visualize eigenvalues with 1P-BD (Real)
 
 opts = Func_DOF('ClippingStyle','3dbox');
 
 fig = figure();
 
-% Func_VisualizeEig(M,AR.BD1_i0)
-% Alternatively, try these:
-% Func_VisualizeEig(M,AR.BD1_i0,'BRIND',{1,2,3,4})
-Func_VisualizeEig(M,AR.BD1_i0,'TYPE','Im')
+Func_VisualizeEig(M,AR.BD1_i0)
 
 xlabel('$I_0$ [\ ]','interpreter','latex')
 ylabel('$\Re(\lambda)$','interpreter','latex')
-% ylabel('$\Im(\lambda)$','interpreter','latex')
 zlabel('$V$ [\ ]','interpreter','latex')
 
 % Optional: Apply figure style with options specified above
 Func_FigStyle(fig,'OPTIONs',opts)
 
+%%
+
+% EIGENVALUEs - Visualize eigenvalues with 1P-BD. (Branch subset)
+
+opts = Func_DOF('ClippingStyle','3dbox');
+
+fig = figure();
+
+Func_VisualizeEig(M,AR.BD1_i0,'BRIND',{1,2,3,4})
+
+xlabel('$I_0$ [\ ]','interpreter','latex')
+ylabel('$\Re(\lambda)$','interpreter','latex')
+zlabel('$V$ [\ ]','interpreter','latex')
+
+% Optional: Apply figure style with options specified above
+Func_FigStyle(fig,'OPTIONs',opts)
+
+%%
+
+% EIGENVALUEs - Visualize eigenvalues with 1P-BD. (Imaginary)
+
+opts = Func_DOF('ClippingStyle','3dbox');
+
+fig = figure();
+
+Func_VisualizeEig(M,AR.BD1_i0,'TYPE','Im')
+
+xlabel('$I_0$ [\ ]','interpreter','latex')
+ylabel('$\Im(\lambda)$','interpreter','latex')
+zlabel('$V$ [\ ]','interpreter','latex')
+
+% Optional: Apply figure style with options specified above
+Func_FigStyle(fig,'OPTIONs',opts)
 
 %%
 

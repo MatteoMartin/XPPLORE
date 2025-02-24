@@ -16,7 +16,7 @@
 clear all; close all; clc;
 
 % Import Package. Change to YOUR XPPLORE PATH!
-addpath(genpath('../../XPPLORE'))
+addpath(genpath('../../../XPPLORE'))
 
 %% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
@@ -31,7 +31,7 @@ AR = Func_ReadAutoRepo(M,'FHN_Sr.auto');
 %% from SECTION 3.4 - AVERAGING
 
 % TRAJECTORIEs - Extract the periodic orbits.
-TRJ = Func_GetTRJ(M1,AR_Sr.BD1_sI);
+TRJ = Func_GetTRJ(M,AR.BD1_sI);
 
 %% SECTION 3.5 - SLOW MANIFOLD
 
@@ -43,7 +43,7 @@ SrP = Func_SlowManifoldProjection(TRJ,{'v','h','s'});
 
 % VISUALIZATION - (hI-lo)
 fig = figure();
-Func_VisualizeDiagram(M1,AR_Sr.BD1_sI,'VAR',{'sI','v'});
+Func_VisualizeDiagram(M,AR.BD1_sI,'VAR',{'sI','v'});
 
 xlabel('$s(0)$ [\ ]','interpreter','latex')
 ylabel('$v$ [\ ]','interpreter','latex')

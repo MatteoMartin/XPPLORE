@@ -53,7 +53,7 @@ hold on
 plot(D.h,D.v,'Color','b','LineWidth',1.2)
 hold off
 
-xlabel('$h$ [\ ]','interpreter','latex'), xlim([0 1])
+xlabel('$h$ [\ ]','interpreter','latex'), xlim([-0.05 1])
 ylabel('$V$ [mV]','interpreter','latex'), ylim([-80 60])
 
 Func_FigStyle(fig)

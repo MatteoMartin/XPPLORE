@@ -46,7 +46,7 @@ Func_FigStyle(fig)
 %% Figure 11
 
 % BOUNDARIEs
-B.I  = [0  180];
+B.I  = [0 200];
 B.gK = [0   60];
 
 % OPTIONs
@@ -67,7 +67,7 @@ text(B.I(1)-(B.I(2)-B.I(1))*0.23,B.gK(2),'(A)','interpreter','latex')
 xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex')
 ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')
 
-xlim([0 180])
+xlim([0 200])
 ylim([0 60])
 
 % (B)
@@ -84,7 +84,7 @@ ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')
 
 set(gca,'YAxisLocation','right')
 
-xlim([0 180])
+xlim([0 200])
 ylim([0 60])
 
 Func_FigStyle(fig,'OPTIONs',opts)

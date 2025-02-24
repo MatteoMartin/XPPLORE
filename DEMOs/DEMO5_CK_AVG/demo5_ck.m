@@ -53,7 +53,7 @@ Func_FigStyle(fig);
 % WRITE POINTs - Convert and export the .auto in a .dat file
 Func_WritePoints(M,AR.BD1_c,'BD.dat')
 
-%% FIGURE 7
+%% FIGURE 13
 
 % OPTIONs
 opts = Func_DOF('width',12);

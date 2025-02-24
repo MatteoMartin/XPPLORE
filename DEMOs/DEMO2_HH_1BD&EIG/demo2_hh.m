@@ -17,7 +17,7 @@
 clear all; close all; clc;
 
 % Import Package. Change to YOUR XPPLORE PATH!
-addpath(genpath('../../XPPLORE'))
+addpath(genpath('../../../XPPLORE'))
 
 %% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
@@ -84,10 +84,9 @@ Func_FigStyle(fig,'OPTIONs',opts)
 [EIGBR, EIGLAB] = Func_GetEig(AR.BD1_i0);
 
 EIGBR{2}(5,:,1) % Display eigenvals. of points along bif. branch
+EIGLAB(3,:,2)   % Display eigenvals. of labeled points
 
-EIGLAB(3,:,2) % Display eigenvals. of labeled points
-
-%% FIGURE 3
+%% FIGURE 9
 
 % BOUNDARIEs
 B.I = [0  200];
@@ -142,11 +141,12 @@ Func_FigStyle(fig,'OPTIONs',opts)
 % Func_FigExport(fig,'demo2_DSWEB_1PBD')
 
 
-%% Figure 4
+%% Figure 10
 
-
+% OPTIONs
 opts = Func_DOF('ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
 
+% VISUALIZATION
 fig = figure();
 
 Func_VisualizeEig(M,AR.BD1_i0)

@@ -86,7 +86,7 @@ ylim([-1.2 -0.2]), ylabel('$v$ [\ ]','interpreter','latex')
 
 Func_FigStyle(fig)
 
-%% FIGURE 8
+%% FIGURE 14
 
 % OPTIONs
 opts = Func_DOF('ClippingStyle','3dbox','width',12,'height',6);

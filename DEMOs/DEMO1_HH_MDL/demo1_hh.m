@@ -16,7 +16,7 @@
 clear all; close all; clc;
 
 % Import Package. Change to YOUR XPPLORE PATH!
-addpath(genpath('../../XPPLORE'))
+addpath(genpath('../../../XPPLORE'))
 
 %% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
 
@@ -58,7 +58,7 @@ ylabel('$V$ [mV]','interpreter','latex'), ylim([-80 60])
 
 Func_FigStyle(fig)
 
-%% FIGURE 2
+%% FIGURE 8
 
 % BOUNDARIEs
 B.t = [0  100];

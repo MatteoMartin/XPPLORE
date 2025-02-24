@@ -49,7 +49,7 @@ view(45,10)
 
 Func_FigStyle(fig)
 
-%% FIGURE 6
+%% FIGURE 12
 
 % BOUNDARIEs
 B.i0 = [0  180];

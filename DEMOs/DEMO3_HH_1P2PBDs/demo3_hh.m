@@ -43,7 +43,7 @@ ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex'), ylim([0 60])
 
 Func_FigStyle(fig)
 
-%% Figure 5
+%% Figure 11
 
 % BOUNDARIEs
 B.I  = [0  180];

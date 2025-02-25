@@ -32,6 +32,7 @@ AR = Func_ReadAutoRepo(M,'ck.auto');
 
 % TRAJECTORIEs - Extract the periodic orbits.
 TRJ = Func_GetTRJ(M,AR.BD1_c);
+TRJ % Display content
 
 %%
 % AVERAGING - Applying averaging.

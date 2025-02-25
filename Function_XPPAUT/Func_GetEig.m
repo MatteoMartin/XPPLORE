@@ -58,7 +58,7 @@ if isfield(BD, 'LABPTs')
     sz = size(first.EigR,2);
     EIGLAB = zeros(PTs.nPT-1,sz+1,2);
 
-    for iPT = 1:(BD.LABPTs.nPT-1)
+    for iPT = 1:BD.LABPTs.nPT
         PT = PTs.(FPT{iPT});
         if srt
             [srtR,inds] = sort(PT.EigR,2);

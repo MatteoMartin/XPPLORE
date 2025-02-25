@@ -65,9 +65,9 @@ fig = figure();
 
 Func_VisualizeEig(M,AR.BD1_i0)
 
-xlabel('$I_0$ [\ ]','interpreter','latex')
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex')
 ylabel('$\Re(\lambda)$','interpreter','latex')
-zlabel('$V$ [\ ]','interpreter','latex')
+zlabel('$V$ [mV]','interpreter','latex')
 
 % Optional: Apply figure style with options specified above
 Func_FigStyle(fig,'OPTIONs',opts)
@@ -82,9 +82,9 @@ fig = figure();
 
 Func_VisualizeEig(M,AR.BD1_i0,'BRIND',{1,2,3,4})
 
-xlabel('$I_0$ [\ ]','interpreter','latex')
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex')
 ylabel('$\Re(\lambda)$','interpreter','latex')
-zlabel('$V$ [\ ]','interpreter','latex')
+zlabel('$V$ [mV]','interpreter','latex')
 
 % Optional: Apply figure style with options specified above
 Func_FigStyle(fig,'OPTIONs',opts)
@@ -99,9 +99,9 @@ fig = figure();
 
 Func_VisualizeEig(M,AR.BD1_i0,'TYPE','Im')
 
-xlabel('$I_0$ [\ ]','interpreter','latex')
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex')
 ylabel('$\Im(\lambda)$','interpreter','latex')
-zlabel('$V$ [\ ]','interpreter','latex')
+zlabel('$V$ [mV]','interpreter','latex')
 
 % Optional: Apply figure style with options specified above
 Func_FigStyle(fig,'OPTIONs',opts)

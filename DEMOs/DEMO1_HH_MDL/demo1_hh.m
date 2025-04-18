@@ -1,5 +1,5 @@
 % 
-% Chapter 3.2: Model, Simulation & Nullclines
+% Chapter 4.2: Model, Simulation & Nullclines
 % 
 %
 % PhD Students Martin Matteo (*') & Thomas Anna Kishida (+')
@@ -8,9 +8,9 @@
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 02/21/2025
+% Last Update - 04/18/2025
 
-%% SECTION 3.1 - PREPARATION
+%% SECTION 4.1 - PREPARATION
 
 % Clear Environment.
 clear all; close all; clc;
@@ -18,7 +18,7 @@ clear all; close all; clc;
 % Import Package. Change to YOUR XPPLORE PATH!
 addpath(genpath('../../../XPPLORE'))
 
-%% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% SECTION 4.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
 M = Func_ReadModel('hh.ode');
@@ -58,7 +58,7 @@ ylabel('$V$ [mV]','interpreter','latex'), ylim([-80 60])
 
 Func_FigStyle(fig)
 
-%% FIGURE 8
+%% FIGURE 7
 
 % BOUNDARIEs
 B.t = [0  100];
@@ -106,4 +106,4 @@ xticks([0 0.25 0.50 0.75 1])
 xticklabels({'0','0.25','0.50','0.75','1'})
 
 Func_FigStyle(fig,'OPTIONs',opts)
-%Func_FigExport(fig,'demo1_DSWEB_hh')
+%Func_FigExport(fig,'demo1_IJBC_hh')

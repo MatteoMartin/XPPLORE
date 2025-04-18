@@ -1,6 +1,6 @@
 % 
-% Chapter 3.3 Bifurcation Diagram
-%         - 3.3.3 Multi BDs
+% Chapter 4.3 Bifurcation Diagram
+%         - 4.3.3 Multi BDs
 % 
 %
 % PhD Students Martin Matteo (*') & Thomas Anna Kishida (+')
@@ -9,9 +9,9 @@
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 02/21/2025
+% Last Update - 04/18/2025
 
-%% from SECTION 3.1 - PREPARATION
+%% from SECTION 4.1 - PREPARATION
 
 % Clear Environment.
 clear all; close all; clc;
@@ -19,12 +19,12 @@ clear all; close all; clc;
 % Import Package. Change to YOUR XPPLORE PATH!
 addpath(genpath('../../../XPPLORE'))
 
-%% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% from SECTION 4.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
 M = Func_ReadModel('hh.ode');
 
-%% SECTION 3.3 - BIFURCATION DIAGRAM
+%% SECTION 4.3 - BIFURCATION DIAGRAM
 
 % AUTORePO - Read the content of an .auto file.
 AR = Func_ReadAutoRepo(M,'hh.auto');
@@ -49,7 +49,7 @@ view(45,10)
 
 Func_FigStyle(fig)
 
-%% FIGURE 12
+%% FIGURE 11
 
 % BOUNDARIEs
 B.i0 = [0  180];
@@ -95,4 +95,4 @@ zlabel('$V$ [mV]','interpreter','latex')             , zlim(B.V )
 view(135,10)
 
 Func_FigStyle(fig,'OPTIONs',opts)
-%Func_FigExport(fig,'demo4_DSWEB_MULTI')
+%Func_FigExport(fig,'demo4_IJBC_MULTI')

@@ -1,0 +1,78 @@
+######### ODEs
+
+dv/dt = -TP * (h-((v^3-v+1)/2)-g*s*v)
+dh/dt = -TP * (-e*(2*h + 2.6*v))
+ds/dt = -TP * (-e*(d*s))
+
+
+######### FREE PARAMETERs
+
+dTP/dt = 0
+
+
+######## BOUNDARY CONDITIONs
+
+bndry 2*h-(v^3-v+1)-s*v
+bndry H1*(s-(1-3*v^2)) + (1-H1)*(v-vI)
+bndry s-sI
+bndry s'-sE
+
+
+######### PARAMETERs
+
+p sI = 0.27970
+p sE = 0.27970
+p vI = 0
+p H1 = 1
+
+num g = 0.500
+num e = 0.015
+num d = 0.565
+
+
+######### INITIAL CONDITIONs
+
+i v  = -0.4900
+i h  =  0.6176
+i s  =  0.2797 
+i TP =  0
+
+
+######### SETTNGS
+
+# VISUALIZATION
+@ MULTIWIN=1
+@ SIMPLOT=0
+@ NPLOT=1
+@ XP=t
+@ YP=v
+@ XLO=0
+@ XHI=1
+@ YLO=-4
+@ YHI=4
+
+# AUTO
+@ NTST=100      
+@ NPR=10000
+@ NMAX=10000
+@ DS=1e-3
+@ DSMAX=0.1
+@ DSMIN=5e-5
+@ NORMMIN=0
+@ NORMMAX=Inf
+@ PARMIN=-1
+@ PARMAX=0.6
+@ AUTOVAR=V
+@ AUTOXMIN=-1
+@ AUTOYMIN=-1
+@ AUTOXMAX=1
+@ AUTOYMAX=1
+
+# INTEGRATION
+@ BOUND=1e50
+@ TOTAL=1
+@ TOL=1e-9
+@ DT=0.001
+@ ATOLER=1e-9
+@ METHOD=Q
+done

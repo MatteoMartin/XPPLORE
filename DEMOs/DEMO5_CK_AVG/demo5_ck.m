@@ -1,5 +1,5 @@
 % 
-% Chapter 3.4 Averaging
+% Chapter 4.4 Averaging
 % 
 %
 % PhD Students Martin Matteo (*') & Thomas Anna Kishida (+')
@@ -8,9 +8,9 @@
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 02/21/2025
+% Last Update - 04/18/2025
 
-%% from SECTION 3.1 - PREPARATION
+%% from SECTION 4.1 - PREPARATION
 
 % Clear Environment.
 clear all; close all; clc;
@@ -18,17 +18,17 @@ clear all; close all; clc;
 % Import Package. Change to YOUR XPPLORE PATH!
 addpath(genpath('../../../XPPLORE'))
 
-%% from SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% from SECTION 4.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
 M = Func_ReadModel('ck.ode');
 
-%% from SECTION 3.3 - BIFURCATION DIAGRAM
+%% from SECTION 4.3 - BIFURCATION DIAGRAM
 
 % AUTORePO - Read the content of an .auto file.
 AR = Func_ReadAutoRepo(M,'ck.auto');
 
-%% SECTION 3.4 - AVERAGING
+%% SECTION 4.4 - AVERAGING
 
 % TRAJECTORIEs - Extract the periodic orbits.
 TRJ = Func_GetTRJ(M,AR.BD1_c);
@@ -54,7 +54,7 @@ Func_FigStyle(fig);
 % WRITE POINTs - Convert and export the .auto in a .dat file
 Func_WritePoints(M,AR.BD1_c,'BD.dat')
 
-%% FIGURE 13
+%% FIGURE 12
 
 % OPTIONs
 opts = Func_DOF('width',12);
@@ -98,4 +98,4 @@ ylabel('$\langle \dot{c} \rangle$ [$\mu$M/ms]','interpreter','latex')
 set(gca,'YAxisLocation','right')
 
 Func_FigStyle(fig,'OPTIONs',opts)
-%Func_FigExport(fig,'demo5_DSWEB_AVG')
+%Func_FigExport(fig,'demo5_IJBC_AVG')

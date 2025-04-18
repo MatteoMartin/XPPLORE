@@ -1,0 +1,59 @@
+File: hh.ode 
+
+ Equations... 
+dV/dT=(I0+IS(T)-INA(V)-IK(V)-IL(V))/C
+dM/dT=AM(V)*(1-M)-BM(V)*M
+dH/dT=AH(V)*(1-H)-BH(V)*H
+dN/dT=AN(V)*(1-N)-BN(V)*N
+INA=GNA*(V-VNA)*H*M^3
+IK=GK*(V-VK)*N^4
+IL=GL*(V-VL)
+STIM=IS(T)
+
+User-defined functions:
+IS(T) = IAPP*HEAV(T-TON)*HEAV(TOFF-T)  
+AM(V) = PHI*.1*(V+40)/(1-EXP(-(V+40)/10))  
+BM(V) = PHI*4*EXP(-(V+65)/18)  
+AH(V) = PHI*.07*EXP(-(V+65)/20)  
+BH(V) = PHI*1/(1+EXP(-(V+35)/10))  
+AN(V) = PHI*.01*(V+55)/(1-EXP(-(V+55)/10))  
+BN(V) = PHI*.125*EXP(-(V+65)/80)  
+INA(V) = GNA*(V-VNA)*H*M^3  
+IK(V) = GK*(V-VK)*N^4  
+IL(V) = GL*(V-VL)  
+
+
+ Numerical parameters ...
+NJMP=1  NMESH=40 METHOD=Runge-Kutta EVEC_ITER=100 
+BVP_EPS=1e-05,BVP_TOL=1e-05,BVP_MAXIT=20 
+DT=0.05 T0=0 TRANS=0 TEND=500 BOUND=10000 DELAY=0 MaxPts=4000
+EVEC_ERR=0.001, NEWT_ERR=0.001 HMIN=1e-12 HMAX=1 TOLER=0.001 
+POIMAP=0 POIVAR=V POIPLN=0 POISGN=1 
+
+
+ Delay strings ...
+0.0
+0.0
+0.0
+0.0
+
+
+ BCs ...
+0=0
+0=0
+0=0
+0=0
+
+
+ ICs ...
+V=-65
+M=0.05
+H=0.6
+N=0.317
+
+
+ Parameters ...
+i0=0   vna=50   vk=-77   vl=-54.387   
+gna=120   gk=36   gl=0.3   c=1   
+phi=1   iapp=0   ton=100   toff=200   
+

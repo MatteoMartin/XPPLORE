@@ -1,0 +1,227 @@
+## Set file for hh.ode on Wed Apr  2 09:02:43 2025
+8   Number of equations and auxiliaries
+12   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+3   Runge-Kutta
+500  total
+0.05  DeltaT
+0  T0
+0  Transient
+10000  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+0  Current time
+0  Last Time
+0   MyStart
+0   INFLAG
+# Delays
+0.0
+0.0
+0.0
+0.0
+# Bndry conds
+0
+0
+0
+0
+# Old ICs
+-65  V
+0.05  M
+0.6  H
+0.317  N
+# Ending  ICs
+0  V
+0  M
+0  H
+0  N
+# Parameters
+0  i0
+50  vna
+-77  vk
+-54.387  vl
+120  gna
+36  gk
+0.3  gl
+1  c
+1  phi
+0  iapp
+100  ton
+200  toff
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974482  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+20   xmax
+0   xmin
+1   ymax
+-1   ymin
+12   zmax
+-12   zmin
+10   
+0.1   
+0   
+1   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+-1   ylo
+0   
+-1   
+20   xhi
+1   yhi
+20   
+1   
+# Transpose variables etc
+V
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+i0
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+V
+V
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+i0
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dV/dT=(I0+IS(T)-INA(V)-IK(V)-IL(V))/C
+dM/dT=AM(V)*(1-M)-BM(V)*M
+dH/dT=AH(V)*(1-H)-BH(V)*H
+dN/dT=AN(V)*(1-N)-BN(V)*N
+INA=GNA*(V-VNA)*H*M^3
+IK=GK*(V-VK)*N^4
+IL=GL*(V-VL)
+STIM=IS(T)
+
+User-defined functions:
+IS(T) = IAPP*HEAV(T-TON)*HEAV(TOFF-T)  
+AM(V) = PHI*.1*(V+40)/(1-EXP(-(V+40)/10))  
+BM(V) = PHI*4*EXP(-(V+65)/18)  
+AH(V) = PHI*.07*EXP(-(V+65)/20)  
+BH(V) = PHI*1/(1+EXP(-(V+35)/10))  
+AN(V) = PHI*.01*(V+55)/(1-EXP(-(V+55)/10))  
+BN(V) = PHI*.125*EXP(-(V+65)/80)  
+INA(V) = GNA*(V-VNA)*H*M^3  
+IK(V) = GK*(V-VK)*N^4  
+IL(V) = GL*(V-VL)  

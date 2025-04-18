@@ -1,6 +1,6 @@
 % 
-% Chapter 3.3 Bifurcation Diagram
-%         - 3.3.1 1-Parameter BD & Eigenvalues
+% Chapter 4.3 Bifurcation Diagrams
+%         - 4.3.1 1-Parameter BD & Eigenvalues
 % 
 %
 % PhD Students Martin Matteo (*') & Thomas Anna Kishida (+')
@@ -9,9 +9,9 @@
 % (+) University of Pittsburgh
 % (') Both authors contributed equally to the work.
 %
-% Last Update - 02/21/2025
+% Last Update - 04/18/2025
 
-%% from SECTION 3.1 - PREPARATION
+%% from SECTION 4.1 - PREPARATION
 
 % Clear Environment.
 clear all; close all; clc;
@@ -19,12 +19,12 @@ clear all; close all; clc;
 % Import Package. Change to YOUR XPPLORE PATH!
 addpath(genpath('../../../XPPLORE'))
 
-%% SECTION 3.2 - MODEL, SIMULATION & NULLCLINEs
+%% SECTION 4.2 - MODEL, SIMULATION & NULLCLINEs
 
 % MODEL - Read the content of an .ode file.
 M = Func_ReadModel('hh.ode');
 
-%% SECTION 3.3 - BIFURCATION DIAGRAM
+%% SECTION 4.3 - BIFURCATION DIAGRAM
 
 % AUTORePO - Read the content of an .auto file.
 AR = Func_ReadAutoRepo(M,'hh.auto');
@@ -115,7 +115,7 @@ Func_FigStyle(fig,'OPTIONs',opts)
 EIGBR{2}(5,:,1) % Display eigenvals. of points along bif. branch
 EIGLAB(3,:,2)   % Display eigenvals. of labeled points
 
-%% FIGURE 9
+%% FIGURE 8
 
 % BOUNDARIEs
 B.I = [0  200];
@@ -167,10 +167,10 @@ xlim([0 200])
 ylim([0   1])
 
 Func_FigStyle(fig,'OPTIONs',opts)
-% Func_FigExport(fig,'demo2_DSWEB_1PBD')
+% Func_FigExport(fig,'demo2_IJBC_1PBD')
 
 
-%% Figure 10
+%% Figure 9
 
 % OPTIONs
 opts = Func_DOF('ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
@@ -185,4 +185,4 @@ ylabel('$\Re(\lambda)$','interpreter','latex')
 zlabel('$V$ [\ ]','interpreter','latex')
 
 Func_FigStyle(fig,'OPTIONs',opts)
-% Func_FigExport(fig,'demo2_DSWEB_EIG3D')
+% Func_FigExport(fig,'demo2_IJBC_EIG3D')

@@ -1,38 +1,21 @@
-#  morris-lecar model
+# Morris-Lecar model
 
-init v   = 0    n  = 0.3
+minf(v)=.5*(1+tanh((v-v1)/v2))
+ninf(v)=.5*(1+tanh((v-v3)/v4))
+tau(v)= 1/cosh((v-v3)/(2*v4))
 
-par iapp = 0.08
-par c    = 1
-par phi  = 0.333
-par gl   = 0.5    gk = 2     gca = 1
-par vl   = -0.5   vk = -0.7  vca = 1
-par v1   = -0.01  v2 = 0.15  v3 = 0.1  v4 = 0.145
+dv/dt=(-gca*minf(v)*(v-vca)-gk*n*(v-vk)-gl*(v-vl)+Iapp)/C
+dn/dt=phi*(ninf(v)-n)/tau(v)
 
+params Iapp = 0
+params phi  = 0.004
+params C  = 20
+params vk = -84 , vca = 120, vl = -60
+params gk =  8  , gca = 4.4, gl = 2
+params v1 = -1.2, v2  =  18, v3 = 2  , v4 = 30 
 
-il(v)  = gl  * 1       * (v-vl)
-ik(v)  = gk  * n       * (v-vk)
-ica(v) = gca * minf(v) * (v-vca)
+init v=-60, n=0
 
-minf(v) = 0.5 * (1 + tanh((v-v1)/v2))
-ninf(v)   = 0.5 * (1 + tanh((v-v3)/v4))
-taun(v) = 1 / (cosh((v-v3)/(2*v4)))
-
-v' = (iapp - il(v) -ik(v) - ica(v))/c
-n' = phi * (ninf(v) - n) / taun(v)
-
-
-# track the currents 
-aux ail  = gl  * 1       * (v-vl)
-aux aik  = gk  * n       * (v-vk)
-aux aica = gca * minf(v) * (v-vca)
-
-# track the stimulus
-aux stim = iapp
-
-
-@ bound=10000,total=500
+@ yp=v, xp=t, xlo=0, xhi=200, ylo=-80, yhi=70
+@ total=2000, dt=0.02, method=qualrk
 done
-
-
-

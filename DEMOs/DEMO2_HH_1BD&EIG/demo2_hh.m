@@ -30,7 +30,7 @@ M = Func_ReadModel('hh.ode');
 AR = Func_ReadAutoRepo(M,'hh.auto');
 AR % Display content
 
-%% 
+%%
 
 % BD & LABPTs - Visualization
 fig = figure();
@@ -74,6 +74,25 @@ Func_FigStyle(fig,'OPTIONs',opts)
 
 %%
 
+% EIGENVALUEs - Visualize eigenvalues with 1P-BD (Cylinder)
+
+opts = Func_DOF('ClippingStyle','3dbox');
+
+fig = figure();
+
+Func_VisualizeEig2(M,AR.BD1_i0)
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
+
+view(110,15)
+
+% Optional: Apply figure style with options specified above
+Func_FigStyle(fig,'OPTIONs',opts)
+
+%%
+
 % EIGENVALUEs - Visualize eigenvalues with 1P-BD. (Branch subset)
 
 opts = Func_DOF('ClippingStyle','3dbox');
@@ -85,6 +104,25 @@ Func_VisualizeEig(M,AR.BD1_i0,'BRIND',{1,2,3,4})
 xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex')
 ylabel('$\Re(\lambda)$','interpreter','latex')
 zlabel('$V$ [mV]','interpreter','latex')
+
+% Optional: Apply figure style with options specified above
+Func_FigStyle(fig,'OPTIONs',opts)
+
+%%
+
+% EIGENVALUEs - Visualize eigenvalues with 1P-BD (Cylinder - Branch subset)
+
+opts = Func_DOF('ClippingStyle','3dbox');
+
+fig = figure();
+
+Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
+
+view(110,15)
 
 % Optional: Apply figure style with options specified above
 Func_FigStyle(fig,'OPTIONs',opts)
@@ -169,8 +207,51 @@ ylim([0   1])
 Func_FigStyle(fig,'OPTIONs',opts)
 % Func_FigExport(fig,'demo2_IJBC_1PBD')
 
+%% Figure 9 - (NEW)
 
-%% Figure 9
+% BOUNDARIEs
+B.I  = [0    200];
+B.Re = [-1.5 1.5];
+B.Im = [-1.5 1.5];
+
+% OPTIONs
+opts = Func_DOF('width',12,'ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
+
+% VISUALIZATION
+fig = figure();
+
+tiledlayout(1,2,'TileSpacing','Compact','Padding','Compact')
+
+% (A)
+nexttile()
+
+text(B.I(1)-(B.I(2)-B.I(1))*0.25,B.Re(1)-(B.Re(2)-B.Re(1))*0.87,B.Im(2)-(B.Im(2) - B.Im(1))*0.2,'(A)','interpreter','latex')
+
+Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
+
+view(110,15)
+
+% (B)
+nexttile()
+
+Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
+
+text(B.I(1)-(B.I(2)-B.I(1))*0.15,B.Re(2)+(B.Re(2)-B.Re(1))*0.45,B.Im(2)+(B.Im(2) - B.Im(1))*0.07,'(B)','interpreter','latex')
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
+
+view(-45,15)
+
+Func_FigStyle(fig,'OPTIONs',opts)
+% Func_FigExport(fig,'demo2_IJBC_EIG3D')
+
+%% Figure 9 - (OLD)
 
 % OPTIONs
 opts = Func_DOF('ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');

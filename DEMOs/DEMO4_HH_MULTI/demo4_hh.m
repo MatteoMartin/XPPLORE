@@ -73,8 +73,8 @@ Func_VisualizeLabPoints(M,AR.BD1_i0  ,'VAR',{'i0','gk','v'})
 
 text(B.i0(1)-(B.i0(2)-B.i0(1))*0.28,B.gK(1)-(B.gK(2)-B.gK(1))*0.28,B.V(2),'(A)','interpreter','latex')
 
-xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim(B.i0)
-ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')    , ylim(B.gK)
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim(B.i0), xticks([0 90 180])
+ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')    , ylim(B.gK), yticks([0 30 60])
 zlabel('$V$ [mV]','interpreter','latex')             , zlim(B.V )
 
 view(45,10)
@@ -88,8 +88,8 @@ Func_VisualizeLabPoints(M,AR.BD1_i0  ,'VAR',{'i0','gk','v'})
 
 text(B.i0(2)+(B.i0(2)-B.i0(1))*0.28,B.gK(1)-(B.gK(2)-B.gK(1))*0.28,B.V(2),'(B)','interpreter','latex')
 
-xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim(B.i0)
-ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')    , ylim(B.gK)
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim(B.i0), xticks([0 90 180])
+ylabel('$g_K$ [mS/cm$^2$]','interpreter','latex')    , ylim(B.gK), yticks([0 30 60])
 zlabel('$V$ [mV]','interpreter','latex')             , zlim(B.V )
 
 view(135,10)

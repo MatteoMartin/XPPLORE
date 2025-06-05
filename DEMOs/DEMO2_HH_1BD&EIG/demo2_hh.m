@@ -118,7 +118,7 @@ fig = figure();
 
 Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
 
-xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 201])
 ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
 zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
 
@@ -215,7 +215,7 @@ B.Re = [-1.5 1.5];
 B.Im = [-1.5 1.5];
 
 % OPTIONs
-opts = Func_DOF('width',12,'ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
+opts = Func_DOF('width',12,'ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r600');
 
 % VISUALIZATION
 fig = figure();
@@ -225,13 +225,13 @@ tiledlayout(1,2,'TileSpacing','Compact','Padding','Compact')
 % (A)
 nexttile()
 
-text(B.I(1)-(B.I(2)-B.I(1))*0.25,B.Re(1)-(B.Re(2)-B.Re(1))*0.87,B.Im(2)-(B.Im(2) - B.Im(1))*0.2,'(A)','interpreter','latex')
+text(B.I(1)-(B.I(2)-B.I(1))*0.25,B.Re(1)-(B.Re(2)-B.Re(1))*0.77,B.Im(2)-(B.Im(2) - B.Im(1))*0.2,'(A)','interpreter','latex')
 
 Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
 
-xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
-ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
-zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 201])   , xticks([0 100 200]), xticklabels({'0','100','200'})
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5]), yticks([-1 0 1]), yticklabels({'-1','0','1'})
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5]), zticks([-1 0 1]), zticklabels({'-1','0','1'})
 
 view(110,15)
 
@@ -240,13 +240,42 @@ nexttile()
 
 Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
 
-text(B.I(1)-(B.I(2)-B.I(1))*0.15,B.Re(2)+(B.Re(2)-B.Re(1))*0.45,B.Im(2)+(B.Im(2) - B.Im(1))*0.07,'(B)','interpreter','latex')
+text(B.I(1)-(B.I(2)-B.I(1))*0.15,B.Re(2)+(B.Re(2)-B.Re(1))*0.35,B.Im(2)+(B.Im(2) - B.Im(1))*0.07,'(B)','interpreter','latex')
 
-xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 200])
-ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5])
-zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5])
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 201])   , xticks([0 100 200]), xticklabels({'0','100','200'})
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5]), yticks([-1 0 1]), yticklabels({'-1','0','1'})
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5]), zticks([-1 0 1]), zticklabels({'-1','0','1'})
 
 view(-45,15)
+
+Func_FigStyle(fig,'OPTIONs',opts)
+% Func_FigExport(fig,'demo2_IJBC_EIG3D','OPTIONs',opts)
+
+%%
+
+% BOUNDARIEs
+B.I  = [0    200];
+B.Re = [-1.5 1.5];
+B.Im = [-1.5 1.5];
+
+% OPTIONs
+opts = Func_DOF('width',12,'ClippingStyle','3dbox','format','-dpdf','extension','.pdf','resolution','-r400');
+
+% VISUALIZATION
+fig = figure();
+
+% (B)
+nexttile()
+
+Func_VisualizeEig2(M,AR.BD1_i0,'BRIND',{1,2,3,4})
+
+text(B.I(1)-(B.I(2)-B.I(1))*0.15,B.Re(2)+(B.Re(2)-B.Re(1))*0.45,B.Im(2)+(B.Im(2) - B.Im(1))*0.07,'(B)','interpreter','latex')
+
+xlabel('$I_0$ [$\mu$A/cm$^2$]','interpreter','latex'), xlim([0 201])   , xticks([0 50 100 150 200]), xticklabels({'0','50','100','150','200'})
+ylabel('$\Re(\lambda)$','interpreter','latex')       , ylim([-1.5 1.5]), yticks([-1 0 1])          , yticklabels({'-1','0','1'})
+zlabel('$\Im(\lambda)$','interpreter','latex')       , zlim([-1.5 1.5]), zticks([-1 0 1])          , zticklabels({'-1','0','1'})
+
+view(10,25)
 
 Func_FigStyle(fig,'OPTIONs',opts)
 % Func_FigExport(fig,'demo2_IJBC_EIG3D')

@@ -1,9 +1,22 @@
-function opts = Func_DOBD()
+function opts = Func_DOBD(varargin)
 %
 %   opts = Func_DOBD()
 %
 %   This function creates the default structure containing the visalization
 %   settings for the bifurcation diagrams and the bifurcation points.
+%
+%   @param [SNPO] RGB color vector for SNPO
+%   @param [SN]   RGB color vector for SN
+%   @param [TR]   RGB color vector for TR
+%   @param [HB]   RGB color vector for HB
+%   @param [PD]   RGB color vector for PD
+%   @param [BP]   RGB color vector for BP
+%   @param [UZ]   RGB color vector for UZ
+%   @param [EQS]  RGB color vector for stable fixed point
+%   @param [EQU]  RGB color vector for unstable fixed point
+%   @param [CYS]  RGB color vector for stable cycles
+%   @param [CYU]  RGB color vector for unstable cycles
+%   @param [BVP]  RGB color vector for boundary value problems
 %
 %   @output opts:   Options structure.
 %
@@ -16,8 +29,7 @@ function opts = Func_DOBD()
 %
 % Last Update - 01/07/2025
 
-% Colors
-
+% XPPAUT's DEFAULT COLOR SCHEME
 %SNPO = [  0   0   0]/255;
 %SN   = [255   0   0]/255;
 %TR   = [  0 160 100]/255;
@@ -26,28 +38,81 @@ function opts = Func_DOBD()
 %BP   = [  0 255 255]/255;
 %UZ   = [  0 255 194]/255;
 
-SNPO = [255 149   5]/255;
-SN   = [0   255 255]/255;
-TR   = [205 130 255]/255;
-HB   = [255   0 255]/255;
-PD   = [  0   0   0]/255;
-BP   = [  0 255 255]/255;
-UZ   = [  0 255 194]/255;
+% ANNA & MATTEO's COLOR SCHEME
+%SNPO = [255 149   5]/255;
+%SN   = [0   255 255]/255;
+%TR   = [205 130 255]/255;
+%HB   = [255   0 255]/255;
+%PD   = [  0   0   0]/255;
+%BP   = [  0 255 255]/255;
+%UZ   = [  0 255 194]/255;
+
+
+% DEFAULT VALUEs
+
+defaultValueSNPO = [255 149   5]/255;
+defaultValueSN   = [0   255 255]/255;
+defaultValueTR   = [205 130 255]/255;
+defaultValueHB   = [255   0 255]/255;
+defaultValuePD   = [  0   0   0]/255;
+defaultValueBP   = [  0 255 255]/255;
+defaultValueUZ   = [  0 255 194]/255;
+
+defaultValueEQS  = [1 0 0];
+defaultValueEQU  = [0 0 0];
+defaultValueCYS  = [0 1 0];
+defaultValueCYU  = [0 0 1];
+defaultValueBVP  = [0 0 0];
+
+
+% PARSING
+
+parser = inputParser;
+addParameter(parser,'SNPO',defaultValueSNPO,@isvector)
+addParameter(parser,'SN'  ,defaultValueSN  ,@isvector)
+addParameter(parser,'TR'  ,defaultValueTR  ,@isvector)
+addParameter(parser,'HB'  ,defaultValueHB  ,@isvector)
+addParameter(parser,'PD'  ,defaultValuePD  ,@isvector)
+addParameter(parser,'BP'  ,defaultValueBP  ,@isvector)
+addParameter(parser,'UZ'  ,defaultValueUZ  ,@isvector)
+addParameter(parser,'EQS' ,defaultValueEQS ,@isvector)
+addParameter(parser,'EQU' ,defaultValueEQU ,@isvector)
+addParameter(parser,'CYS' ,defaultValueCYS ,@isvector)
+addParameter(parser,'CYU' ,defaultValueCYU ,@isvector)
+addParameter(parser,'BVP' ,defaultValueBVP ,@isvector)
+parse(parser,varargin{:});
+
+
+% UNPACKING
+
+SNPO = parser.Results.SNPO;
+SN   = parser.Results.SN;
+TR   = parser.Results.TR;
+HB   = parser.Results.HB;
+PD   = parser.Results.PD;
+BP   = parser.Results.BP;
+UZ   = parser.Results.UZ;
+EQS  = parser.Results.EQS;
+EQU  = parser.Results.EQU;
+CYS  = parser.Results.CYS;
+CYU  = parser.Results.CYU;
+BVP  = parser.Results.BVP;
+
 
 % BD - Ordinary Equilibrium Settings
 
-opts.BifDiag.OrdEq.S          = 'r';
-opts.BifDiag.OrdEq.U          = 'k';
-%opts.BifDiag.OrdEq.LineWidth  = 1.5;
-opts.BifDiag.OrdEq.LineWidth  = 1.2;
-opts.BifDiag.OrdEq.LineStyle  = '-';
-opts.BifDiag.OrdEq.Marker     = 'none';
-opts.BifDiag.OrdEq.MarkerSize = 8;
+opts.BifDiag.Eq.S          = EQS;
+opts.BifDiag.Eq.U          = EQU;
+%opts.BifDiag.Eq.LineWidth  = 1.5;
+opts.BifDiag.Eq.LineWidth  = 1.2;
+opts.BifDiag.Eq.LineStyle  = '-';
+opts.BifDiag.Eq.Marker     = 'none';
+opts.BifDiag.Eq.MarkerSize = 8;
 
 % BD - Cycles Settings
 
-opts.BifDiag.Cycle.S          = 'g';
-opts.BifDiag.Cycle.U          = 'b';
+opts.BifDiag.Cycle.S          = CYS;
+opts.BifDiag.Cycle.U          = CYU;
 %opts.BifDiag.Cycle.LineWidth  = 1.5;
 opts.BifDiag.Cycle.LineWidth  = 1.2;
 opts.BifDiag.Cycle.LineStyle  = '-';
@@ -56,7 +121,7 @@ opts.BifDiag.Cycle.MarkerSize = 8;
 
 % BD - Cycles Settings
 
-opts.BifDiag.BVP.P          = 'k';
+opts.BifDiag.BVP.P          = BVP;
 %opts.BifDiag.BVP.LineWidth  = 1.5;
 opts.BifDiag.BVP.LineWidth  = 1.2;
 opts.BifDiag.BVP.LineStyle  = '-';
@@ -151,14 +216,5 @@ opts.Bif.UZ.MarkerFaceColor = UZ;
 
 opts.NC.C = {[255 149 5]/255,...    % x-nullcline
              [66 245 147]/255};     % y-nullcline
-
-% Colors - Bifurcations 
-%opts.C.SNPO = [255 149   5]/255;
-%opts.C.SN   = [0   255 255]/255;
-%opts.C.TR   = [205 130 255]/255;
-%opts.C.HB   = [255   0 255]/255;
-%opts.C.PD   = [  0   0   0]/255;
-%opts.C.BP   = [  0 255 255]/255;
-%opts.C.UZ   = [  0 255 194]/255;
 
 end

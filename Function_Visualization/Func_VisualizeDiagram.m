@@ -89,8 +89,8 @@ for i = 1:length(BRIND)
         end
     
         if BT == 0
-            if T == 1 , TYP = 'OrdEq';  C = 'S'; end
-            if T == 2 , TYP = 'OrdEq';  C = 'U'; end
+            if T == 1 , TYP = 'Eq'   ;  C = 'S'; end
+            if T == 2 , TYP = 'Eq'   ;  C = 'U'; end
             if T == 3 , TYP = 'Cycle';  C = 'S'; end
             if T == 4 , TYP = 'Cycle';  C = 'U'; end
             if T == 8 , TYP = 'BVP'  ;  C = 'P'; end

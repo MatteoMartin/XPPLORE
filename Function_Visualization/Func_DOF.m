@@ -26,22 +26,19 @@ addOptional(p,'format'            ,'-dpdf'            )
 addOptional(p,'extension'         ,'.pdf'             )
 addOptional(p,'resolution'        ,'-r600'            )
 %addOptional(p,'width'             ,10                 ,@isnumeric)
-addOptional(p,'width'             ,6                 ,@isnumeric)
 %addOptional(p,'height'            ,10                 ,@isnumeric)
-addOptional(p,'height'            ,6                 ,@isnumeric)
-addOptional(p,'Layer'             ,'top'              ,@ischar)
-addOptional(p,'ClippingStyle'     ,'rectangle'        ,@ischar)
-addOptional(p,'FontName'          ,'Times New Roman'  ,@ischar)
 %addOptional(p,'FontSize'          ,12                 ,@isnumeric)
+addOptional(p,'width'             ,6                 ,@isnumeric)
+addOptional(p,'height'            ,6                 ,@isnumeric)
+addOptional(p,'Layer'             ,'top'             ,@ischar)
+addOptional(p,'ClippingStyle'     ,'rectangle'       ,@ischar)
+addOptional(p,'FontName'          ,'Times New Roman' ,@ischar)
 addOptional(p,'FontSize'          ,9                 ,@isnumeric)
-addOptional(p,'xlim'              ,[]                 ,isXYZLim)
-addOptional(p,'ylim'              ,[]                 ,isXYZLim)
-addOptional(p,'zlim'              ,[]                 ,isXYZLim)
-addOptional(p,'units'             ,'centimeters'      ,@ischar)
-addOptional(p,'gridLineStyle'     ,'none'             ,@ischar)
-addOptional(p,'minorGridLineStyle','none'             ,@ischar)
-addOptional(p,'gridAlpha'         ,0                  ,@isnumeric)
-addOptional(p,'minorGridAlpha'    ,0                  ,@isnumeric)
+addOptional(p,'units'             ,'centimeters'     ,@ischar)
+addOptional(p,'gridLineStyle'     ,'none'            ,@ischar)
+addOptional(p,'minorGridLineStyle','none'            ,@ischar)
+addOptional(p,'gridAlpha'         ,0                 ,@isnumeric)
+addOptional(p,'minorGridAlpha'    ,0                 ,@isnumeric)
 parse(p,varargin{:})
 
 % Figure - Size
@@ -72,11 +69,5 @@ opts.ClippingStyle = p.Results.ClippingStyle;
 
 opts.FontName = p.Results.FontName;
 opts.FontSize = p.Results.FontSize;
-
-% Figure - Axes Boundaries 
-
-opts.xlim = p.Results.xlim;
-opts.ylim = p.Results.ylim;
-opts.zlim = p.Results.zlim;
 
 end

@@ -116,7 +116,7 @@ for i=1:1:nBRIND
         MS = opts.BifDiag.(TYP).MarkerSize;
 
         Func_VisualizeBranch(X,Y,Z,C,LS,LW,M,MS,'none')
-        Func_VisualizeLabPoints(BRIND{i},PTs,PAR,V,P,opts,CYL);
+        Func_VisualizePoints(BRIND{i},PTs,PAR,V,P,opts,CYL);
     end
 end
 
@@ -135,11 +135,6 @@ Func_VisualizeCylinder(CYL,ParMin,ParMax);
         surf(C.Par,C.RM,C.IM,'FaceColor','k','FaceAlpha',0.2,'EdgeColor','none')
         hold off
 
-        %hold on
-        %plot3(C.Par(:,1)  ,C.RM(:,1)  ,C.IM(:,1)  ,'Color','k','LineWidth',1.2)
-        %plot3(C.Par(:,end),C.RM(:,end),C.IM(:,end),'Color','k','LineWidth',1.2)
-        %hold off
-
     end
 
     function Func_VisualizeBranch(X,Y,Z,C,LS,LW,M,MS,MFC)
@@ -156,7 +151,7 @@ Func_VisualizeCylinder(CYL,ParMin,ParMax);
         hold on
     end
 
-    function Func_VisualizeLabPoints(BRi,PTs,PAR,V,P,opts,CYL)
+    function Func_VisualizePoints(BRi,PTs,PAR,V,P,opts,CYL)
         FPTs = fieldnames(PTs);
         for k = 1:size(FPTs)-1
             PTi = FPTs{k};

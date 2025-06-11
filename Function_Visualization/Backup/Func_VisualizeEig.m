@@ -1,0 +1,401 @@
+function Func_VisualizeEig(M,BD,varargin)
+%
+%   Func_VisualizeEig(M,BD,[VAR],[BRIND],[TYPE],[OPTIONs])
+%
+%   Function to visualize the eigenvalues with the
+%   bifurcation diagram in BD.
+%   The variables on the x/y/z axes are in VAR.
+%   The colours of the branches are specified in opts.
+%
+%   @param M     :   Model's structure
+%   @param BD    :   Bifurcation Diagram structure
+%   
+%   @optional VAR     :   Axes' variables
+%   @optional BRIND   :   Index/Indices of branches to be visualized.
+%   @optional TYPE    :   Real or Imaginary parts of Eig?
+%   @optional OPTIONs :   Options structure
+%
+%
+% PhD Students Martin Matteo (*') & Thomas Anna Kishida (+')
+%
+% (*) University of Padova
+% (+) University of Pittsburgh
+% (') Both authors contributed equally to the work.
+%
+% Last Update - 02/14/2025
+
+
+
+
+% DEFAULT VALUEs
+
+defaultOptions = Func_DOBD();
+
+% DEFAULT VALUEs - VARIABLEs
+iFs = 1;
+Fs  = fieldnames(M.V); 
+while not(strcmp(M.V.(Fs{iFs}),'D')), iFs = iFs + 1; end
+if length(BD.P) == 2, defaultVAR = BD.P;
+else                , defaultVAR = {BD.P{1},Fs{iFs}};
+end
+
+% DEFAULT TYPE - Re/Im
+defaultType = 'Re';
+defaultBRIND = {};
+
+% PARSING INPUT
+
+parser = inputParser;
+addRequired(parser ,'M'  ,@isstruct)
+addRequired(parser ,'BD' ,@isstruct)
+addParameter(parser,'VAR'    ,defaultVAR     ,@iscell)
+addParameter(parser,'BRIND'  ,defaultBRIND   ,@iscell)
+addParameter(parser,'OPTIONs',defaultOptions ,@isstruct)
+addParameter(parser, 'TYPE', defaultType, @(x) ...
+    (ischar(x) && (strcmpi(x, 'Re') || strcmpi(x, 'Im'))) || ...
+    (iscell(x) && all(cellfun(@(y) ischar(y) && (strcmpi(y, 'Re') || strcmpi(y, 'Im')), x))));
+parse(parser,M,BD,varargin{:});
+
+
+% UNPACKING INPUT
+
+VAR   = parser.Results.VAR;
+BRIND = parser.Results.BRIND;
+opts  = parser.Results.OPTIONs;
+type  = parser.Results.TYPE;
+
+% INPUT
+
+BDBR          = BD.BR;
+P             = M.P;
+V             = Func_DynVAR(M.V);
+nV            = length(VAR);
+[EIG,EIGLAB]  = Func_GetEig(BD,'SORTED',true);
+PTs           = BD.LABPTs;
+DIM           = size(EIGLAB,2);
+    
+% Begin Visualization
+
+FBR = fieldnames(BDBR);
+FPT = fieldnames(PTs);
+
+if isempty(BRIND)
+    BRIND = arrayfun(@(x) x, 1:BDBR.nBR, 'UniformOutput', false);
+end
+
+if strcmp(type,'Re')
+    eigcol = 1;
+else
+    eigcol = 2;
+end
+
+limits = [0,0,0,0,0,0];
+
+% Visualize BD Branches
+for i=1:1:length(BRIND)
+
+    iBR = BRIND{i};
+
+    BR = FBR{iBR};
+    T  = BDBR.(BR).TYP ;
+    BT = BDBR.(BR).TPar;
+
+    if Func_IsVisualizableBranch(BDBR.(BR),VAR,V,P)
+        [XU,XL] = Func_GetAxis(BDBR.(BR),VAR{1},V,P);
+        [YU,YL] = Func_GetAxis(BDBR.(BR),VAR{2},V,P);
+    
+        if BT == 0
+            if T == 1 , TYP = 'Eq'   ;  C = 'S'; end
+            if T == 2 , TYP = 'Eq'   ;  C = 'U'; end
+            if T == 3 , TYP = 'Cycle';  C = 'S'; end
+            if T == 4 , TYP = 'Cycle';  C = 'U'; end
+            if T == 8 , TYP = 'BVP'  ;  C = 'P'; end
+        else
+            TYP = 'Bif';
+            if T == 1 , C = 'SN'  ; end
+            if T == 2 , C = 'SNPO'; end
+            if T == 3 , C = 'HB'  ; end
+            if T == 4 , C = 'TR'  ; end
+            if T == 6 , C = 'PD'  ; end
+        end
+    
+        C  = opts.BifDiag.(TYP).(C);
+        LW = opts.BifDiag.(TYP).LineWidth;
+        LS = opts.BifDiag.(TYP).LineStyle;
+        M  = opts.BifDiag.(TYP).Marker;
+        MS = opts.BifDiag.(TYP).MarkerSize;
+
+        % ERROR - Changed to size()
+        Func_VisualizeBranch(XL,zeros(size(XU)),YU,C,LS,LW,M,MS,'b')
+        Func_VisualizeBranch(XU,zeros(size(XL)),YL,C,LS,LW,M,MS,'b')
+
+        EIGBRx = EIG{BRIND{i}}(:,:,eigcol);
+        for j=1:size(EIGBRx,2)
+            ZU = EIGBRx(:,j);
+            ZL = EIGBRx(:,j);
+            Func_VisualizeBranch(XU,ZU,YU,C,'-',LW,M,MS,'b')
+            Func_VisualizeBranch(XL,ZL,YL,C,'-',LW,M,MS,'b')
+        end
+
+        Func_VisualizeLabPoints(EIGLAB,BRIND{i},PTs,VAR,V,P,opts,eigcol,DIM);
+
+        limits(1) = min(round(min(XL))*1.2,limits(1));
+        limits(2) = max(round(max(XU))*1.2,limits(2));
+        limits(3) = min(round(min(ZL))*1.2,limits(3));
+        limits(4) = max(round(max(ZU))*1.2,limits(4));
+        limits(5) = min(round(min(YL))*1.2,limits(5));
+        limits(6) = max(round(max(YU))*1.2,limits(6));
+    end
+end  
+
+Func_VisualizeXYPlane('y',0,limits,0.05,type);
+Func_VisualizeXYPlane('y',-1,limits,0.03,type);
+Func_VisualizeXYPlane('y',1,limits,0.03,type);
+xlim([limits(1) limits(2)]);
+zlim([limits(5) limits(6)]);
+ylim([-1.1,1.1]);
+set(gca, 'YDir', 'reverse'); % Flips the Y-axis
+view(3); view([10 15]);
+    
+    % FUNCTIONs
+
+    function Func_VisualizeBranch(X,Y,Z,C,LS,LW,M,MS,MFC)
+        if isempty(Z)
+            % disp("2D case!");
+
+            hold on
+            plot(X,Y,'Color',C,      ...
+                'LineStyle',LS, ...
+                'LineWidth',LW, ...
+                'Marker',M,     ...
+                'MarkerSize',MS,...
+                'MarkerFaceColor',MFC)
+            hold off
+        else
+            hold on
+            plot3(X,Y,Z,'Color',C,      ...
+                'LineStyle',LS, ...
+                'LineWidth',LW, ...
+                'Marker',M,     ...
+                'MarkerSize',MS,...
+                'MarkerFaceColor',MFC)
+            hold on
+        end
+    end
+
+    function Func_VisualizeLabPoints(EIGLAB,BRi,PTs,VAR,V,P,opts,eigcol,DIM)
+        FPTs = fieldnames(PTs);
+        for k=1:size(EIGLAB,1)
+            if EIGLAB(k,1,1)==BRi
+
+                PTi = FPTs{k};
+
+                I = find(opts.Bif.Types == PTs.(PTi).TYP,1);
+                if isempty(I), continue, end
+        
+                if Func_IsVisualizableBranch(PTs.(PTi),VAR,V,P)
+                    [XUp,XLo] = Func_GetAxis(PTs.(PTi),VAR{1},V,P);
+                    [YUp,YLo] = Func_GetAxis(PTs.(PTi),VAR{2},V,P);
+
+                    % Visualize Labeled Points in Eig=0 plane
+                    Func_VisualizeBranch(XLo,zeros(size(XLo)),YLo,opts.Bif.(opts.Bif.Names{I}).Color,...
+                                             'none',...
+                                             1,...
+                                             opts.Bif.(opts.Bif.Names{I}).Marker,...
+                                             opts.Bif.(opts.Bif.Names{I}).MarkerSize,...
+                                             opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
+                    Func_VisualizeBranch(XUp,zeros(size(XUp)),YUp,opts.Bif.(opts.Bif.Names{I}).Color,...
+                                             'none',...
+                                             1,...
+                                             opts.Bif.(opts.Bif.Names{I}).Marker,...
+                                             opts.Bif.(opts.Bif.Names{I}).MarkerSize,...
+                                             opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
+
+                    % Visualize Labeled Points along Eig-BD branches
+                    Func_VisualizeBranch(XLo,EIGLAB(k,2:DIM,eigcol),YLo, ...
+                        opts.Bif.(opts.Bif.Names{I}).Color,'none',1, ...
+                        opts.Bif.(opts.Bif.Names{I}).Marker,...
+                        opts.Bif.(opts.Bif.Names{I}).MarkerSize,...
+                        opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
+                    Func_VisualizeBranch(XUp,EIGLAB(k,2:DIM,eigcol),YUp, ...
+                        opts.Bif.(opts.Bif.Names{I}).Color,'none',1, ...
+                        opts.Bif.(opts.Bif.Names{I}).Marker, ...
+                        opts.Bif.(opts.Bif.Names{I}).MarkerSize, ...
+                        opts.Bif.(opts.Bif.Names{I}).MarkerFaceColor);
+                end
+            end
+        end
+    end
+
+    function Func_VisualizeXYPlane(zeroplane,planeval,limits,alpha,planevar)
+
+        if ~ischar(zeroplane) || ~ismember(zeroplane, {'x', 'y', 'z'})
+            error('Argument "zeroind" must be one of ''x'', ''y'', or ''z''.');
+        end
+    
+        hold on;
+        switch zeroplane
+            case 'x'
+                [Y, Z] = meshgrid(limits(3):1:limits(4), limits(5):1:limits(6));
+                surf(zeros(size(Y)) + planeval, Y, Z, 'FaceColor', [0.5, 0.5, 0.5], ...
+                    'EdgeColor', 'none', 'FaceAlpha', alpha);
+                hold on;
+        
+                cornersX = [planeval, planeval, planeval, planeval, planeval];
+                cornersY = [limits(3), limits(4), limits(4), limits(3), limits(3)];
+                cornersZ = [limits(5), limits(5), limits(6), limits(6), limits(5)];
+                plot3(cornersX, cornersY, cornersZ, 'k-', 'LineWidth', 0.1);
+
+                text(planeval, limits(4), limits(6), strcat(planevar,'=',string(planeval)), ...
+                    'HorizontalAlignment', 'right', 'VerticalAlignment', 'top');
+        
+                hold off;
+        
+            case 'y'
+                [X, Z] = meshgrid(limits(1):1:limits(2), limits(5):1:limits(6));
+                surf(X, zeros(size(X)) + planeval, Z, 'FaceColor', [0.5, 0.5, 0.5], ...
+                    'EdgeColor', 'none', 'FaceAlpha', alpha);
+                hold on;
+        
+                cornersX = [limits(1), limits(2), limits(2), limits(1), limits(1)];
+                cornersY = [planeval, planeval, planeval, planeval, planeval];
+                cornersZ = [limits(5), limits(5), limits(6), limits(6), limits(5)];
+                plot3(cornersX, cornersY, cornersZ, 'k-', 'LineWidth', 0.1);
+
+                text(limits(2), planeval, limits(6), ...
+                    strcat('$\',planevar,'=',string(planeval),'$'),'Interpreter','Latex', ...
+                    'HorizontalAlignment', 'right', 'VerticalAlignment', 'top');
+        
+                hold off;
+        
+            case 'z'
+                [X, Y] = meshgrid(limits(1):1:limits(2), limits(3):1:limits(4));
+                surf(X, Y, zeros(size(X)) + planeval, 'FaceColor', [0.5, 0.5, 0.5], ...
+                    'EdgeColor', 'none', 'FaceAlpha', alpha);
+                hold on;
+        
+                cornersX = [limits(1), limits(2), limits(2), limits(1), limits(1)];
+                cornersY = [limits(3), limits(3), limits(4), limits(4), limits(3)];
+                cornersZ = [planeval, planeval, planeval, planeval, planeval];
+                plot3(cornersX, cornersY, cornersZ, 'k-', 'LineWidth', 0.1);
+
+                text(limits(2), limits(4), planeval, strcat(planevar,'=',string(planeval)), ...
+                    'HorizontalAlignment', 'right', 'VerticalAlignment', 'top');
+        
+                hold off;
+        end
+
+        hold off;
+    end
+    
+    function isV = Func_IsTwoParameter(VAR,P)
+        nV = length(VAR);
+        nP = 0;
+        for iV = 1:1:nV
+            if Func_IsParameter(VAR{iV},P)
+                nP = nP + 1;
+            end
+        end
+    
+        isV = false;
+        if nP == 2, isV = true; end
+    end
+    
+    function isV = Func_IsVisualizableBranch(B,VAR,V,P)
+        isV  = true;
+        F    = fieldnames(B);
+        nVAR = length(VAR);
+        for iV = 1:1:nVAR
+            if not(Func_IsSpecialField(VAR{iV}))
+                if not(Func_IsVariable(VAR{iV},V))
+                    if not(Func_IsParameter(VAR{iV},P))
+                        isV = false;
+                        break
+                    else
+                        isV = Func_IsField(VAR{iV},F);
+                        if not(isV), break; end
+                    end
+                end
+            else
+                isV = Func_IsField(VAR{iV},F);
+                if not(isV), break; end
+            end
+        end
+    end
+    
+    function isV = Func_IsSpecialField(VC)
+        isV = false;
+        if strcmp(VC,'L2')
+            isV = true;
+            return
+        end
+        if strcmp(VC,'T')
+            isV = true;
+            return
+        end
+    end
+    
+    function isV = Func_IsField(f,F)
+        isV = false;
+        nF  = length(F);
+        for iF = 1:1:nF
+            if strcmp(F{iF},f)
+                isV = true;
+                break
+            end
+        end
+    end
+    
+    function isV = Func_IsVariable(VC,V)
+        isV  = false;
+        nVAR = length(V);
+        for iVAR = 1:1:nVAR
+            if strcmp(VC,V{iVAR})
+                isV = true;
+                break
+            end
+        end
+    end
+    
+    function isP = Func_IsParameter(PC,P)
+        isP = false;
+        F   = fieldnames(P);
+        for iPAR = 1:1:P.nP
+            if strcmp(PC,F{iPAR})
+                isP = true;
+                break
+            end
+        end
+    end
+    
+    function [QU,QL] = Func_GetAxis(B,VAR,V,P)
+        if Func_IsParameter(VAR,P)
+            QU = B.(VAR);
+            QL = B.(VAR);
+            return
+        end
+        if Func_IsVariable(VAR,V)
+            QU = B.([VAR,'U']);
+            QL = B.([VAR,'L']);
+            return
+        end
+        if Func_IsSpecialField(VAR)
+            QU = B.(VAR);
+            QL = B.(VAR);
+            return
+        end
+    end
+    
+    function DV = Func_DynVAR(V)
+        F  = fieldnames(V);
+        nF = length(F);
+        iV = 1;
+        for iF = 1:1:nF
+            if strcmp(V.(F{iF}),'D')
+                DV{iV} = F{iF};
+                iV = iV + 1;
+            end
+        end
+    end
+
+end

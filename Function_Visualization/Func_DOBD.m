@@ -136,7 +136,8 @@ opts.BifDiag.Bif.SNPO       = SNPO;
 opts.BifDiag.Bif.SN         = SN;
 opts.BifDiag.Bif.TR         = TR;
 opts.BifDiag.Bif.UZ         = UZ;
-%opts.BifDiag.Bif.LineWidth  = 1.5;
+opts.BifDiag.Bif.BP         = BP;
+%opts.BifDiag.Bif.LineWidth = 1.5;
 opts.BifDiag.Bif.LineWidth  = 1.2;
 opts.BifDiag.Bif.LineStyle  = '-';
 opts.BifDiag.Bif.Marker     = 'none';
@@ -196,7 +197,7 @@ opts.Bif.BC.MarkerSize      = 3;
 opts.Bif.BC.Color           = BP;
 opts.Bif.BC.MarkerFaceColor = BP;
 
-% BP - Bifurcation Cycle
+% BP - Bifurcation Point
 
 opts.Bif.BP.Marker          = 'hexagram';
 %opts.Bif.BP.MarkerSize      = 5;
@@ -204,7 +205,7 @@ opts.Bif.BP.MarkerSize      = 3;
 opts.Bif.BP.Color           = BP;
 opts.Bif.BP.MarkerFaceColor = BP;
 
-% BP - User
+% UZ - User
 
 opts.Bif.UZ.Marker          = 'o';
 %opts.Bif.UZ.MarkerSize      = 5;

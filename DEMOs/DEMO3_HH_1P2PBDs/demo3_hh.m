@@ -31,6 +31,18 @@ AR = Func_ReadAutoRepo(M,'hh.auto');
 
 %%
 
+fig = figure();
+
+Func_VisualizeDiagram(M,AR.BD2_i0_gk)
+
+%%
+
+fig = figure();
+
+Func_VisualizeEig3(M,AR.BD2_i0_gk,'VAR',{'EigR','i0','gk'},'BRIND',{1})
+
+%%
+
 % VISUALIZATION - Visualize a 2P-BD.
 fig = figure();
 

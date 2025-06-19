@@ -1,34 +1,38 @@
-# 🧪 **XPPLORE: The Toolbox for Bifurcation Diagrams**
+# **XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB**
 
-Have you ever wished for a magic wand to handle continuation calculations from **XPPAUT** with ease?  
-Well, your wish has come true! **XPPLORE** is here to revolutionize the way students, professors, and researchers work with bifurcation diagrams. Say goodbye to tedious processes and hello to streamlined workflows!
+This repository accompanies our [formal writeup](https://arxiv.org/) that will be available on ArXiv and will be submitted for publication.
 
 ---
 
-## 💡 **The Problem We Solve**
+Have you ever wished for a magic wand to handle continuation calculations from **XPPAUT** with ease?  
+**XPPLORE** is here to revolutionize the way students, professors, and researchers work with bifurcation diagrams (BDs). Say goodbye to tedious processes and hello to streamlined workflows!
 
-As PhD students, we’ve faced the relentless challenge of producing **high-quality bifurcation diagrams** for:
-- 📚 Academic publications
-- 🎤 Oral presentations
-- 📑 Assignments
-- ✏️ Personal notes
+---
+
+## 💡 **The problem we're solving**
+
+As Ph.D. students, we’ve faced the relentless challenge of producing **high-quality bifurcation diagrams** for:
+- Academic publications
+- Oral presentations
+- Course assignments
+- Personal notes
 
 We knew there had to be a better way. So, we rolled up our sleeves and created **XPPLORE**—a toolbox to simplify and supercharge your work.
 
-### **Why Start with MATLAB?**
+### **Why start with MATLAB?**
 
-MATLAB is a fantastic launchpad for innovation! But don’t worry, we’re planning to expand XPPLORE to other programming languages. Stay tuned!
+MATLAB is a fantastic launchpad for innovation, and we’re working to expand XPPLORE to Python next. Stay tuned!
 
 ---
 
 ## 🚀 **Why XPPLORE? It's as Easy as 1-2-3!**
 
-### Folder content:
+### Files needed (Hodgkin-Huxley, for example):
 - `HH.ode` — Your model file
-- `HH.auto` — Your bifurcation data
-- `HH.m` — The script that makes the magic happen
+- `HH.auto` — Your bifurcation data, saved from XPPAUT
+- `HH.m` — The MATLAB script that makes the XPPLORE-ation possible 
 
-### MATLAB script:
+### MATLAB script (example):
 
 ```matlab
 1. M   = Func_ReadModel('HH.ode');
@@ -39,62 +43,69 @@ MATLAB is a fantastic launchpad for innovation! But don’t worry, we’re plann
 6. Func_SaveFigure(fig,opts,'FigureName');
 ```
 
-In just **six lines of code**, you’ll generate stunning, publication-ready visuals!  
+In just **six lines of code**, you can generate stunning, publication-ready visuals!  
 **Don’t just take our word for it—download XPPLORE and see for yourself!**
 
 ---
 
-## 📝 **Delve deeper with some examples**
+## 📝 **Delve deeper with some of our demos**
 
 ### Ready-to-Run Examples:
-- **DEMO1_HH_MDL**: Learn about the basics regarding the model's structure and visualize your first BD!
-- **DEMO2_HH_BD**: Two BDs saved in the same .auto file? The proof of the pudding is in the eating!
-- **DEMO3_HH_BD**: Movement of bifurcations, two parameter bifurcation diagrams and much more!
-- **DEMO4_CK_AVG**: Off-line one-dimensional averaging analysis!
-- **DEMO5_CK_WP**: The old, but nice and always useful AUTO's WritePoints function!
-- **DEMO6_FHN_NC**: Do you need nullclines? In this demo, you can learn the tools to load and visualize them!
-- **DEMO7_FHN_SM**: Learn how to visualize slow manifold reconstruction calculations computed with XPPAUT.
+- **DEMO1_ML_MDL**: Learn about the basics regarding the model's structure, simulations and nullclines
+- **DEMO2_HH_1BD&EIG**: Visualize your first one-parameter bifurcation diagram (1P-BD) and inspect its eigenvalues
+- **DEMO3_HH_1P2PBDs**: Expand 1P- and 2P-BD visualization capabilities (change visualized axes, variables, etc.)
+- **DEMO4_HH_MULTI**: Upgrade BD visualizations by merging multiple diagrams (one- and two-parameter)
+- **DEMO5_CK_AVG**: Leverage continuation data to retrospectively apply averaging theory & incorporate results into figures
+- **DEMO6_CK_LCM**: Utilize continuation data to visualize manifolds of limit cycles
+- **DEMO7_FHN_SM**: Reconstruct slow manifolds as surfaces in your MATLAB plots
 
-### What You’ll Learn:
-- Effortlessly import XPPLORE (temporary solution)
-- Read models with XPPLORE
-- Explore bifurcation diagrams
-- Create stunning visualizations
-- Apply off-line averaging theory
-- Create surfaces with the calculated trajectories 
-
----
-
-## 🛠️ **Your XPPLORE Toolkit**
-
-### **Core Tools**
-- **`ParsingAUTO`**: Parse `.auto` files effortlessly.
-- **`ParsingODE`**: Parse `.ode` files.
-- **`Func_ReadData`**: Extract insights from `.dat` simulation files.
-- **`Func_ReadAutoRepo`**: Reading `.auto` continuation files.
-
-### **Visualization Tools**
-- **`Func_VisualizeDiagram()`**: Showcase diagram branches with style.
-- - **`Func_VisualizeLabPoints()`**: Highlight key labelled points.
-
-### **Styling and Exporting**
-- **`Func_DOF()`**: Customize figures to your liking.
-- **`Func_DOBD()`**: Costumize bifurcation diagrams as you like!
-- **`Func_FigStyle()`**: Apply style to figures.
-- **`Func_FigExport()`**: Export figures with ease.
+### What you’ll learn:
+- Import XPPLORE with two lines of code
+- Read models, nullclines and simulations with XPPLORE
+- Explore bifurcation diagrams (one- & two- parameter)
+- Create fun, professional visualizations
+- Apply averaging theory during post-processing
+- Create surfaces with calculated trajectories 
 
 ---
 
-## 👥 **Meet the Team Behind XPPLAB**
+## 🛠️ **The XPPLORE toolkit**
 
-### **Martin Matteo** (†)
+### **Core tools**
+- **`Func_ReadAutoRepo`**: Reading `.auto` continuation files, using `ParsingAUTO` functions
+- **`Func_ReadData`**: Extract data from `.dat` simulation files
+- **`Func_ReadModel`** Parse `.ode` files, using `ParsingODE` functions
+- **`Func_ReadNullclines`**: Reading `.dat` files storing nullcline information
+
+### **Visualization tools**
+- **`Func_VisualizeDiagram()`**: Showcase diagram branches with style
+- **`Func_VisualizeEig()`**: Display eigenvalues to understand bifurcation diagrams from another angle
+- **`Func_VisualizeLabPoints()`**: Highlight key labelled points
+- **`Func_VisualizeNullclines()`**: Investigate nullclines and overlay simulated systems
+
+### **Styling and exporting**
+- **`Func_DOBD()`**: Customizeable/Default options to visualize bifurcation diagrams
+- **`Func_DOF()`**: Customizeable/Default options for (non-BD) figures
+- **`Func_FigExport()`**: Export figures with ease
+- **`Func_FigStyle()`**: Apply style to figures for export
+
+### **Additional capabilities**
+- **`Func_GetEig`**: Extract eigenvalues from continuation information for user-friendly format
+- **`Func_GetTRJ`**: Extract periodic orbit (PO) trajectories from continuation information for user-friendly format
+- **`Func_WritePoints`**: Creates `.dat` file which can be used in XPP. Imitates XPP's WritePts function
+
+---
+
+## 👥 **Meet the team behind XPPLORE**
+
+### **Matteo Martin** (†)
 **Affiliation**: University of Padova, Department of Information Engineering  
 
-### **Thomas Anna Kishida** (†)
+### **Anna K. Thomas** (†)
 **Affiliation**: University of Pittsburgh, Department of Mathematics
 
 #### *(†) Equal contributors to this project.*
 
 ---
 
-### **📅 Last Updated:** January 14, 2024
+#### **📅 Last Updated:** June 19, 2025

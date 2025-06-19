@@ -5,7 +5,7 @@ This repository accompanies our [formal writeup](https://arxiv.org/) that will b
 ---
 
 Have you ever wished for a magic wand to handle continuation calculations from **XPPAUT** with ease?  
-**XPPLORE** is here to revolutionize the way students, professors, and researchers work with bifurcation diagrams (BDs). Say goodbye to tedious processes and hello to streamlined workflows!
+🔎 **XPPLORE** is here to revolutionize the way students, professors, and researchers work with bifurcation diagrams (BDs). Say goodbye to tedious processes and hello to streamlined workflows!
 
 ---
 
@@ -48,7 +48,7 @@ In just **six lines of code**, you can generate stunning, publication-ready visu
 
 ---
 
-## 📝 **Delve deeper with some of our demos**
+## 📝 **Delve deeper with our demos**
 
 ### Ready-to-Run Examples:
 - **DEMO1_ML_MDL**: Learn about the basics regarding the model's structure, simulations and nullclines

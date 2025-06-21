@@ -342,6 +342,7 @@ end
             if TYP == 2, STYP = 'SNPO'; end
             if TYP == 3, STYP = 'HB'  ; end
             if TYP == 4, STYP = 'TR'  ; end
+            if TYP == 5, STYP = 'BR'  ; end
             if TYP == 6, STYP = 'PD'  ; end
             if TYP == 7, STYP = 'UZ'  ; end
         else

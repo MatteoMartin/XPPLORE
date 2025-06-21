@@ -58,6 +58,21 @@ ylabel('$V$ [mV]','interpreter','latex'), ylim([-80 60])
 
 Func_FigStyle(fig)
 
+%%
+
+% SIMULATION & NULLCLINEs - Visualize the nullclines.
+fig = figure();
+Func_VisualizeNullclines(NC,'VAR',{'v','n'})
+
+hold on
+plot(D.v,D.n,'Color','b','LineWidth',1.2)
+hold off
+
+xlabel('$V$ [mV]','interpreter','latex'), xlim([-80 60])
+ylabel('$n$ [\ ]','interpreter','latex'), ylim([-0.05 1])
+
+Func_FigStyle(fig)
+
 %% FIGURE 7
 
 % BOUNDARIEs

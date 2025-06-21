@@ -100,6 +100,7 @@ for i = 1:length(BRIND)
             if T == 2 , C = 'SNPO'; end
             if T == 3 , C = 'HB'  ; end
             if T == 4 , C = 'TR'  ; end
+            if T == 5 , C = 'BP'  ; end
             if T == 6 , C = 'PD'  ; end
             if T == 7 , C = 'UZ'  ; end
         end
@@ -171,11 +172,16 @@ end
             isV = true;
             return
         end
+        if strcmp(VC,'F')
+            isV = true;
+            return
+        end
     end
 
     function isV = Func_IsField(f,F)
         isV = false;
         nF  = length(F);
+        if strcmp(f,'F'), f = 'T'; end
         for iF = 1:1:nF
             if strcmp(F{iF},f)
                 isV = true;
@@ -214,6 +220,7 @@ end
             end
             return
         end
+
         if Func_IsVariable(VAR,V)
             if length(TYPE) == 2
                 QU = B.([VAR,TYPE{1}]);
@@ -224,10 +231,17 @@ end
             end
             return
         end
+
         if Func_IsSpecialField(VAR)
-            QU = B.(VAR);
-            if length(TYPE) == 2, QL = B.(VAR);
-            else,                 QL = [];
+            if strcmp(VAR,'F'), QU = 1./B.T;
+            else,               QU = B.(VAR);
+            end
+            if length(TYPE) == 2
+                if strcmp(VAR,'F'), QL = 1./B.T;
+                else,               QL = B.(VAR);
+                end
+            else
+                QL = [];
             end
             return
         end

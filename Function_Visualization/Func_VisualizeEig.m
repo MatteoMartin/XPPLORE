@@ -48,7 +48,6 @@ parse(parser,M,BD,varargin{:});
 % UNPACKING INPUT
 
 VAR   = parser.Results.VAR;
-%TYPE  = parser.Results.TYPE;
 BRIND = parser.Results.BRIND;
 opts  = parser.Results.OPTIONs;
 
@@ -122,6 +121,7 @@ for i=1:1:length(BRIND)
             if T == 2 , C = 'SNPO'; end
             if T == 3 , C = 'HB'  ; end
             if T == 4 , C = 'TR'  ; end
+            if T == 5 , C = 'BP'  ; end
             if T == 6 , C = 'PD'  ; end
             if T == 7 , C = 'UZ'  ; end
         end

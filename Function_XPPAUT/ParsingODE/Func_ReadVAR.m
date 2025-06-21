@@ -24,13 +24,13 @@ function V = Func_ReadVAR(fileODE)
 % Last Update - 12/19/2024
 
 % REGEX - Expression (New)
-regexODE1 = 'd([a-zA-Z0-9]+)\[?(\d+)?\.?\.?(\d+)?\]?/dt';
-regexODE2 = '([a-zA-Z0-9]+)\[?(\d+)?\.?\.?(\d+)?\]?''';
-regexAUX  = 'aux\s([a-zA-Z0-9]+)\[?(\d+)?\.?\.?(\d+)?\]?(?:\s|\s+)?=';
+regexODE1 = 'd([a-zA-Z0-9_]+)\[?(\d+)?\.?\.?(\d+)?\]?/dt';
+regexODE2 = '([a-zA-Z0-9_]+)\[?(\d+)?\.?\.?(\d+)?\]?''';
+regexAUX  = 'aux\s([a-zA-Z0-9_]+)\[?(\d+)?\.?\.?(\d+)?\]?(?:\s|\s+)?=';
 
 % REGEX - Expression (Old)
-regexONLY = 'only\s[a-zA-Z0-9]+';
-regexSTOV = 'markov\s[a-zA-Z0-9]+';
+regexONLY = 'only\s[a-zA-Z0-9_]+';
+regexSTOV = 'markov\s[a-zA-Z0-9_]+';
 regexSTO  = 'markov\s';
 regexMULV = '(?<=\[)[^)]*(?=\])';
 regexMUL  = '[0-9]+';

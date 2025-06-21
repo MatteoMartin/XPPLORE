@@ -12,10 +12,10 @@ function opts = Func_DOBD(varargin)
 %   @param [PD]   RGB color vector for PD
 %   @param [BP]   RGB color vector for BP
 %   @param [UZ]   RGB color vector for UZ
-%   @param [EQS]  RGB color vector for stable fixed point
-%   @param [EQU]  RGB color vector for unstable fixed point
-%   @param [CYS]  RGB color vector for stable cycles
-%   @param [CYU]  RGB color vector for unstable cycles
+%   @param [SEQ]  RGB color vector for stable fixed point
+%   @param [UEQ]  RGB color vector for unstable fixed point
+%   @param [SLC]  RGB color vector for stable cycles
+%   @param [ULC]  RGB color vector for unstable cycles
 %   @param [BVP]  RGB color vector for boundary value problems
 %
 %   @output opts:   Options structure.
@@ -58,10 +58,10 @@ defaultValuePD   = [  0   0   0]/255;
 defaultValueBP   = [  0 255 255]/255;
 defaultValueUZ   = [  0 255 194]/255;
 
-defaultValueEQS  = [1 0 0];
-defaultValueEQU  = [0 0 0];
-defaultValueCYS  = [0 1 0];
-defaultValueCYU  = [0 0 1];
+defaultValueSEQ  = [1 0 0];
+defaultValueUEQ  = [0 0 0];
+defaultValueSLC  = [0 1 0];
+defaultValueULC  = [0 0 1];
 defaultValueBVP  = [0 0 0];
 
 
@@ -75,10 +75,10 @@ addParameter(parser,'HB'  ,defaultValueHB  ,@isvector)
 addParameter(parser,'PD'  ,defaultValuePD  ,@isvector)
 addParameter(parser,'BP'  ,defaultValueBP  ,@isvector)
 addParameter(parser,'UZ'  ,defaultValueUZ  ,@isvector)
-addParameter(parser,'EQS' ,defaultValueEQS ,@isvector)
-addParameter(parser,'EQU' ,defaultValueEQU ,@isvector)
-addParameter(parser,'CYS' ,defaultValueCYS ,@isvector)
-addParameter(parser,'CYU' ,defaultValueCYU ,@isvector)
+addParameter(parser,'SEQ' ,defaultValueSEQ ,@isvector)
+addParameter(parser,'UEQ' ,defaultValueUEQ ,@isvector)
+addParameter(parser,'SLC' ,defaultValueSLC ,@isvector)
+addParameter(parser,'ULC' ,defaultValueULC ,@isvector)
 addParameter(parser,'BVP' ,defaultValueBVP ,@isvector)
 parse(parser,varargin{:});
 
@@ -92,17 +92,17 @@ HB   = parser.Results.HB;
 PD   = parser.Results.PD;
 BP   = parser.Results.BP;
 UZ   = parser.Results.UZ;
-EQS  = parser.Results.EQS;
-EQU  = parser.Results.EQU;
-CYS  = parser.Results.CYS;
-CYU  = parser.Results.CYU;
+SEQ  = parser.Results.SEQ;
+UEQ  = parser.Results.UEQ;
+SLC  = parser.Results.SLC;
+ULC  = parser.Results.ULC;
 BVP  = parser.Results.BVP;
 
 
 % BD - Ordinary Equilibrium Settings
 
-opts.BifDiag.Eq.S          = EQS;
-opts.BifDiag.Eq.U          = EQU;
+opts.BifDiag.Eq.S          = SEQ;
+opts.BifDiag.Eq.U          = UEQ;
 %opts.BifDiag.Eq.LineWidth  = 1.5;
 opts.BifDiag.Eq.LineWidth  = 1.2;
 opts.BifDiag.Eq.LineStyle  = '-';
@@ -111,8 +111,8 @@ opts.BifDiag.Eq.MarkerSize = 8;
 
 % BD - Cycles Settings
 
-opts.BifDiag.Cycle.S          = CYS;
-opts.BifDiag.Cycle.U          = CYU;
+opts.BifDiag.Cycle.S          = SLC;
+opts.BifDiag.Cycle.U          = ULC;
 %opts.BifDiag.Cycle.LineWidth  = 1.5;
 opts.BifDiag.Cycle.LineWidth  = 1.2;
 opts.BifDiag.Cycle.LineStyle  = '-';

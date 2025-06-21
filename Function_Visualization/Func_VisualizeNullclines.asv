@@ -46,8 +46,8 @@ VAR  = parser.Results.VAR;
 
 VNC = replace(fieldnames(NC),'NC','')';
 
-iX = find(strcmp(VAR,VNC{1}));
-iY = find(strcmp(VAR,VNC{2}));
+iX = find(VAR,VNC{1});
+iY = find(VAR,VNC{2});
 
 
 % VISUALIZATION
@@ -64,7 +64,7 @@ for iNC = 1:1:nFNC
         N = NC.(NCi).(FPT{iP});
 
         hold on
-        plot(N(:,iX),N(:,iY),'Color',opts.NC.C{iNC},'LineWidth',1.2)
+        plot(N(:,1),N(:,2),'Color',opts.NC.C{iNC},'LineWidth',1.2)
         hold off
     end
 end

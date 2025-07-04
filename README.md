@@ -98,13 +98,17 @@ In just **six lines of code**, you can generate stunning, publication-ready visu
 
 ## 👥 **Meet the team behind XPPLORE**
 
-### **Matteo Martin** (†)
+### **Matteo Martin** (†)(☆)
 **Affiliation**: University of Padova, Department of Information Engineering  
 
 ### **Anna K. Thomas** (†)
 **Affiliation**: University of Pittsburgh, Department of Mathematics
 
+### **G. Bard Ermentrout**
+**Affiliation**: University of Pittsburgh, Department of Mathematics
+
 #### *(†) Equal contributors to this project.*
+#### *(☆)Author for correspondence— matteo.martin.2@phd.unipd.it*
 
 ---
 

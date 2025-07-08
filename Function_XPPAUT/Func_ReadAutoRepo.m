@@ -300,7 +300,7 @@ end
         B.IDXBR = [F7.SET.PT   ];
         B.L2    = [F7.L2       ];
 
-        if B.TYP ~= 1 && B.TYP ~= 2, B.T = [F7.T]; end
+        if B.TYP ~= 1 && B.TYP ~= 2, B.T = [F7.T]; B.F = 1./[F7.T]; end
 
         for iP = 1:1:length(fieldnames(P)), B.(P.(sprintf('Par%i',iP))) = [F7.FP.(sprintf('Par%i',iP))]; end        
 
@@ -319,7 +319,7 @@ end
         B.L2    = [B.L2   ; F7.L2       ];
         B.IDXBR = [B.IDXBR; F7.SET.PT   ];
 
-        if B.TYP ~= 1 && B.TYP ~= 2, B.T = [B.T; F7.T]; end
+        if B.TYP ~= 1 && B.TYP ~= 2, B.T = [B.T; F7.T]; B.F = [B.F; 1./F7.T]; end
         
         for iP = 1:1:length(fieldnames(P))
             f = P.(sprintf('Par%i',iP));
@@ -392,7 +392,7 @@ end
         B.EigR = F7.E.EigR';
         B.EigI = F7.E.EigI';
         
-        if all(B.TYP ~= [1,2,3]), B.T = F7.T; end
+        if all(B.TYP ~= [1,2,3]), B.T = F7.T; B.F = 1./F7.T; end
         for iP = 1:1:length(fieldnames(P)), B.(P.(sprintf('Par%i',iP))) = [F7.FP.(sprintf('Par%i',iP))]; end
         
         FPT  = fieldnames(F7.PT);

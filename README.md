@@ -1,6 +1,6 @@
 # **XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB**
 
-This repository accompanies our [formal writeup](https://arxiv.org/abs/2507.02709v1) (on ArXiv at the moment) that will be available on ArXiv and will be submitted for publication.
+This repository accompanies our [formal writeup]([https://arxiv.org/abs/2507.02709v1](https://www.worldscientific.com/doi/10.1142/S0218127425501652)) that will be available on ArXiv and will be submitted for publication.
 
 ---
 

@@ -39,7 +39,7 @@ Func_VisualizeDiagram(M,AR.BD2_i0_gk)
 
 fig = figure();
 
-Func_VisualizeEig3(M,AR.BD2_i0_gk,'VAR',{'EigR','i0','gk'},'BRIND',{1})
+Func_VisualizeEig(M,AR.BD2_i0_gk,'VAR',{'EigR','i0','gk'},'BRIND',{1})
 
 %%
 

@@ -24,21 +24,15 @@ function V = Func_ReadVAR(fileODE)
 % Last Update - 12/19/2024
 
 % REGEX - Expression (New)
-regexODE1 = 'd([a-zA-Z0-9_]+)\[?(\d+)?\.?\.?(\d+)?\]?/dt';
-regexODE2 = '([a-zA-Z0-9_]+)\[?(\d+)?\.?\.?(\d+)?\]?''';
+regexODE1 = 'd([a-zA-Z0-9_]+(?:\[j\])?)\[?(\d+)?\.?\.?(\d+)?\]?/dt';
+regexODE2 = '([a-zA-Z0-9_]+(?:\[j\])?)\[?(\d+)?\.?\.?(\d+)?\]?''';
 regexAUX  = 'aux\s([a-zA-Z0-9_]+)\[?(\d+)?\.?\.?(\d+)?\]?(?:\s|\s+)?=';
-
-% REGEX - Expression (Old)
-regexONLY = 'only\s[a-zA-Z0-9_]+';
-regexSTOV = 'markov\s[a-zA-Z0-9_]+';
-regexSTO  = 'markov\s';
-regexMULV = '(?<=\[)[^)]*(?=\])';
-regexMUL  = '[0-9]+';
 
 % CHECKs - Keywords
 checkAUX    = 'aux\s';
 checkONLY   = 'only\s';
 checkMARKOV = 'markov\s';
+checkITER   = '%';
 
 % CHECKs - Skipping conditions
 checkBNDRY = 'bndry';
@@ -65,25 +59,53 @@ while ischar(line)
             fprintf('WARNING! - Detected: MARKOV - Under development!\n')
             fprintf('         - Detected: MARKOV - Skipped variables!\n')
         end
-    
-        % EXTRACTION - Dynamical variables
-        if not(contains(line,checkBNDRY))
-            if not(isempty(regexp(line,regexODE1,'once'))) || ...
-                not(isempty(regexp(line,regexODE2,'once')))
-                T = regexp(line,regexODE1,'tokens');
-                if isempty(T), T = regexp(line,regexODE2,'tokens'); end
-    
-                if isempty(T{1}{2}) && isempty(T{1}{3})
-                    VAR{kVAR}  = T{1}{1};
-                    TVAR{kVAR} = 'D';
-                    kVAR = kVAR + 1;
-                else
-                    for iVAR = str2double(T{1}{2}):1:(str2double(T{1}{3}))
-                        VAR{kVAR}  = sprintf('%s%i',T{1}{1},iVAR);
-                        TVAR{kVAR} = 'D';
-                        kVAR = kVAR + 1;
+
+        % EXTRACTION - Dynamical variables in loop
+        if any(regexp(line,checkITER,'start') == 1)
+           
+            iB = strfind(line,'['); 
+            iS = strfind(line,'..'); 
+            iE = strfind(line,']');
+            N1 = str2double(line(iB+1:iS-1)); 
+            N2 = str2double(line(iS+2:iE-1));
+           
+            tempkVAR = 1; 
+            line = fgetl(fID);
+
+            while not(any(regexp(line,checkITER,'start') == 1))
+                if not(contains(line,checkCOMM))
+
+                    % EXTRACTION - Dynamical variables
+                    OUT = Func_ExtractDynVAR(line);
+                    if OUT.DynVAR
+                        for iVAR = 1:1:OUT.nVAR
+                            tempVAR{tempkVAR}  = OUT.VAR{iVAR};
+                            tempTVAR{tempkVAR} = OUT.TVAR{iVAR};
+                            tempkVAR = tempkVAR + 1;
+                        end
                     end
                 end
+
+                line = fgetl(fID);
+            end
+
+            for I = N1:1:N2
+                for iVAR = 1:1:tempkVAR-1
+                    VAR{kVAR} = replace(tempVAR{iVAR},'[j]',num2str(I));
+                    TVAR{kVAR} = tempTVAR{iVAR};
+                    kVAR = kVAR + 1;
+                end
+            end
+            
+        end
+
+        % EXTRACTION - Dynamical variables
+        OUT = Func_ExtractDynVAR(line);
+        if OUT.DynVAR
+            for iVAR = 1:1:OUT.nVAR
+                VAR{kVAR}  = OUT.VAR{iVAR};
+                TVAR{kVAR} = OUT.TVAR{iVAR};
+                kVAR = kVAR + 1;
             end
         end
     
@@ -130,9 +152,37 @@ for iV = 1:1:length(VAR)
     VS{jV}  = VAR{iV};
 end
 
-for iV = 1:1:length(VS)
-    V.(VS{iV}) = TVS{iV};
-end
+for iV = 1:1:length(VS), V.(VS{iV}) = TVS{iV}; end
 
+    % EXTRACTION - Dynamical variables
+    function OUT = Func_ExtractDynVAR(line)
+        OUT.DynVAR = false;
+        if not(contains(line,checkBNDRY))
+            if not(isempty(regexp(line,regexODE1,'once'))) || ...
+                not(isempty(regexp(line,regexODE2,'once')))
+                
+                T = regexp(line,regexODE1,'tokens');
+                if isempty(T), T = regexp(line,regexODE2,'tokens'); end
+                
+                OUT.DynVAR = true;
+
+                if isempty(T{1}{2}) && isempty(T{1}{3})
+                    OUT.VAR{1}  = T{1}{1};
+                    OUT.TVAR{1} = 'D';
+                    nVAR = 1;
+                else
+                    nVAR = 1;
+                    for jVAR = str2double(T{1}{2}):1:(str2double(T{1}{3}))
+                        OUT.VAR{nVAR}  = sprintf('%s%i',T{1}{1},nVAR);
+                        OUT.TVAR{nVAR} = 'D';
+                        nVAR = nVAR + 1;
+                    end
+                    nVAR = nVAR - 1;
+                end
+
+                OUT.nVAR = nVAR;
+            end
+        end
+    end
 
 end

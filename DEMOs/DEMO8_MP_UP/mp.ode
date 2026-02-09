@@ -1,0 +1,108 @@
+#### ODEs
+
+dV/dt = (1/Cm)*( - INaF(V,h) - INaP(V) - IKS(V,s) - IL(V) - IHCN(V) - IM(V) + IApp)
+dh/dt = (hInf(V) - h)/hTau(V)
+ds/dt = (sInf(V) - s)/sTau(V)
+
+
+
+#### CURRENTS
+INaF(V,h) = gNaF*(mInf(V)^3)*h*(V-ENa)
+INaP(V)   = gNaP*(nInf(V)^3)*(V-ENa)
+IKS(V,s)  = gKS*s*(V-EK)
+IL(V)     = gL*(V-ELK)
+IHCN(V)   = gHCN*r*(V-EHCN)
+IM(V)     = gM*w*(V-EK)
+
+
+
+#### INITIALIZATIONS
+init V = 0, h = 0, s = 0
+
+
+
+#### DYNAMICS
+
+# M ACTIVATION VARIABLE
+Am(V) = (1.86*(V + 25.4))/(1 - exp(-(V + 25.4)/10.3))
+Bm(V) = (-0.086*(V + 29.7))/(1 - exp((V + 29.7)/9.16))
+mInf(V) = Am(V)/(Am(V)+Bm(V))
+mTau(V) = 1/(Pm*(Am(V)+Bm(V)))
+
+# H ACTIVATION VARIABLE
+Ah(V) = (-0.0336*(V + 118))/(1 - exp((V + 118)/11))
+Bh(V) = 2.3/(1 + exp(-(V + 35.8)/13.4))
+hInf(V) = Ah(V)/(Ah(V)+Bh(V))
+hTau(V) = 1/(Ph*(Ah(V)+Bh(V)))
+
+# N ACTIVATION VARIABLE
+An(V) = (0.186*(V + 48.4))/(1 - exp(-(V + 48.4)/10.3))
+Bn(V) = (-0.0086*(V + 42.7))/(1 - exp((V + 42.7)/9.16))
+nInf(V) = An(V)/(An(V)+Bn(V))
+nTau(V) = 1/(Pn*(An(V)+Bn(V)))
+
+# S ACTIVATION VARIABLE
+As(V) = (0.00122*(V + 19.5))/(1 - exp(-(V + 19.5)/23.6))
+Bs(V) = (-0.000739*(V + 87.1))/(1 - exp((V + 87.1)/21.8))
+sInf(V) = As(V)/(As(V)+Bs(V))
+sTau(V) = 1/(Ps*(As(V)+Bs(V)))
+
+# TEMPERATURE CORRECTIONs
+Pm = 2.2^((Tmp - 20)/10)
+Ph = 2.9^((Tmp - 20)/10)
+Pn = 2.2^((Tmp - 20)/10)
+Ps = 3.0^((Tmp - 20)/10)
+
+
+
+#### PARAMETERS
+
+# MUTABLE
+param w    = 1
+param IApp = 0
+param gM   = 50
+param gHCN = 23
+param EHCN = -50
+param m    = 0
+param q    = 0
+
+# UNMUTABLE
+num Tmp  = 37
+num Cm   = 0.9
+num gNaF = 1000
+num gNaP = 1
+num gKS  = 40
+num gL   = 11.3
+num ENa  = 50
+num EK   = -84
+num ELK  = -83.38
+
+
+
+#### CONSTRAINT
+
+# LINEAR RELATIONSHIP
+r = m*w + q
+
+# PARAMETER SETs
+
+set A {IApp=250, m=-0.451326, q=0.088661} Ctrl - IApp = 250
+set B {IApp=300, m=-0.424591, q=0.087457} Ctrl - IApp = 300
+set C {IApp=250, m=-0.661187, q=0.206880} CGS  - IApp = 250
+set D {IApp=300, m=-0.616609, q=0.209117} CGS  - IApp = 300 
+
+
+
+#### SETTINGs
+
+# SIMULATIONS
+@ yp=V, xp=t, xlo=0, xhi=500, ylo=-90, yhi=30
+@ total=500, dt=0.001, method=rk, bound=1e30
+
+# AUTO
+@ NTST=30, NMAX=2000, NPR=2000
+@ DSMIN=0.001, DSMAX=0.001, DS=0.01
+@ PARMIN=0, PARMAX=1
+@ AUTOXMIN=0, AUTOXMAX=1
+@ AUTOYMIN=-90, AUTOYMAX=30, AUTOVAR=V
+done

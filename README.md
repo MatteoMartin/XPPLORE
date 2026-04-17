@@ -36,7 +36,7 @@ MATLAB is a fantastic launchpad for innovation, and we’re working to expand XP
 
 ```matlab
 1. M   = Func_ReadModel('HH.ode');
-2. AR  = Func_ReadDiagram(M,'HH.auto');
+2. AR  = Func_ReadAutoRepo(M,'HH.auto');
 3. fig = figure();
 4. Func_VisualizeDiagram(M,AR.BD1_IApp);
 5. Func_VisualizeBifurcation(M,AR.BD1_IApp);
